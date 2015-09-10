@@ -49,7 +49,7 @@ public class BaseController {
     public ModelAndView test(@RequestParam("name") String name) {
         ModelAndView mav =  new ModelAndView("t", "message", "Spring MVC 他 1 by " + name);
         //没有键的情况下,使用Object的类型作为key,String-->string 
-        mav.addObject("这是变量名为name的值！"+globle);
+        mav.addObject("这是变量名为name的值！h哈哈"+globle);
         mav.addObject("secondParam","第二个变量");
         return mav;
     }  
