@@ -1,4 +1,4 @@
-package cn.anthony.moscreen.mr;
+package cn.anthony.moscreen.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

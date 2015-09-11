@@ -1,5 +1,8 @@
 package cn.anthony.boot.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,13 +49,24 @@ public class BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/t", method = RequestMethod.GET)
-    public ModelAndView test(@RequestParam("name") String name) {
-        ModelAndView mav =  new ModelAndView("t", "message", "Spring MVC 他 1 by " + name);
+    public ModelAndView test(@RequestParam Map<String,String> allRequestParams) {
+        ModelAndView mav =  new ModelAndView("t", "message", "Spring MVC 他 1 by " );
         //没有键的情况下,使用Object的类型作为key,String-->string 
-        mav.addObject("这是变量名为name的值！哈哈"+globle);
+        mav.addObject("这是变量名为name的值！sss哈哈"+globle);
         mav.addObject("secondParam","第二个变量");
         return mav;
     }  
+	
+	
+    @RequestMapping(value = "/m", method = RequestMethod.GET)
+    public @ResponseBody Map<String,Object> mo(@RequestParam Map<String,String> allRequestParams) {
+		Map<String,Object> m = new HashMap<String,Object>();
+		m.put("phone","13333333333");
+		m.put("mono","106999999999");
+		m.put("msg","测试内容");
+		m.putAll(allRequestParams);
+		return m;
+	}
  
 	@RequestMapping(value="/welcome/{name}", method = RequestMethod.GET)
 	public String welcomeName(@PathVariable String name, ModelMap model) {
