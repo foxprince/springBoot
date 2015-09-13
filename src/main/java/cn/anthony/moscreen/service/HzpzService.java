@@ -3,6 +3,9 @@ package cn.anthony.moscreen.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.moscreen.util.RefactorUtil;
@@ -34,18 +37,14 @@ import com.anthony.util.http.HTTPUtil;
  * Created by zj on 15-9-9.
  */
 @Service
-public class HzpzService {
+@SpringBootApplication
+public class HzpzService implements CommandLineRunner {
 	private static final String SPNUM = "1065800883246";
 	private static final String STATUS = "DELIVRD";
 	private static final String URL = "http://60.191.122.30/sms/sync.jsp";
 	public static void main(String[] args) {
-		HzpzService service = new HzpzService();
-		try {
-			System.out.println(java.net.URLEncoder.encode("上行内容测试", "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		System.out.println(service.mo("13311111111","上行内容测试","dfffff",0));
+		SpringApplication.run(HzpzService.class, args);
+		
 	}
 	public boolean mo(String mobile,String mo,String linkId,int price) {
 		boolean bool = false;
@@ -91,5 +90,15 @@ public class HzpzService {
 		public HzpzMr() {
 		}
 
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		try {
+			System.out.println(java.net.URLEncoder.encode("上行内容测试", "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		System.out.println(mo("13311111111","上行内容测试","dfffff",0));
 	}
 }
