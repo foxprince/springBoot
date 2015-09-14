@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.moscreen.util.RefactorUtil;
@@ -37,7 +36,6 @@ import com.anthony.util.http.HTTPUtil;
  * Created by zj on 15-9-9.
  */
 @Service
-@SpringBootApplication
 public class HzpzService implements CommandLineRunner {
 	private static final String SPNUM = "1065800883246";
 	private static final String STATUS = "DELIVRD";

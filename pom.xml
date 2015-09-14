@@ -87,10 +87,10 @@
 			<version>3.4</version>
 		</dependency>
 		<!-- 配置简单的安全访问控制 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency> -->
 		<!-- 加入actuator依赖后，应用启动后会创建一些基于Web的Endpoint：
 		    /autoconfig，用来查看Spring Boot的框架自动配置信息，哪些被自动配置，哪些没有，原因是什么。
 		    /beans，显示应用上下文的Bean列表
