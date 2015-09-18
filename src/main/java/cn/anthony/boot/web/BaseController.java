@@ -3,14 +3,9 @@ package cn.anthony.boot.web;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,18 +19,6 @@ public class BaseController {
 	private String message;
 	@Value("${application.globle}")
 	private String globle;
-
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
-	protected HttpSession session;
-
-	@ModelAttribute
-	public void setReqAndRes(HttpServletRequest request,
-			HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
-		this.session = request.getSession();
-	}
 
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public ModelAndView hello() {

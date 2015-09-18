@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.boot.util.RefactorUtil;
@@ -40,10 +39,7 @@ public class HzpzService implements CommandLineRunner {
 	private static final String SPNUM = "1065800883246";
 	private static final String STATUS = "DELIVRD";
 	private static final String URL = "http://60.191.122.30/sms/sync.jsp";
-	public static void main(String[] args) {
-		SpringApplication.run(HzpzService.class, args);
-		
-	}
+	
 	public boolean mo(String mobile,String mo,String linkId,int price) {
 		boolean bool = false;
 		HzpzMr item = new HzpzMr(mobile,mo,SPNUM,linkId,DateUtil.getCurrentTime(),STATUS,price);
