@@ -1,11 +1,11 @@
-package cn.anthony.moscreen.service;
+package cn.anthony.boot.service;
 
 import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
-import cn.anthony.moscreen.domain.DrPushModel;
-import cn.anthony.moscreen.util.RefactorUtil;
+import cn.anthony.boot.doman.DrPushModel;
+import cn.anthony.boot.util.RefactorUtil;
 
 import com.anthony.util.http.HTTPUtil;
 

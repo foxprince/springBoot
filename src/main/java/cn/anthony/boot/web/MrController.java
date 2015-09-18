@@ -1,4 +1,4 @@
-package cn.anthony.boot.moscreen.web;
+package cn.anthony.boot.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.anthony.boot.web.BaseController;
-import cn.anthony.moscreen.domain.DrPushModel;
-import cn.anthony.moscreen.service.DrPushService;
-import cn.anthony.moscreen.util.RefactorUtil;
-import cn.anthony.moscreen.util.Resource;
+import cn.anthony.boot.doman.DrPushModel;
+import cn.anthony.boot.service.DrPushService;
+import cn.anthony.boot.util.RefactorUtil;
+import cn.anthony.boot.util.Resource;
 
 @Controller
 public class MrController extends BaseController {

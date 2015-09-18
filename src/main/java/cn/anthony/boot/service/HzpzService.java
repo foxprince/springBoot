@@ -1,4 +1,4 @@
-package cn.anthony.moscreen.service;
+package cn.anthony.boot.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
 
-import cn.anthony.moscreen.util.RefactorUtil;
+import cn.anthony.boot.util.RefactorUtil;
 import cn.anthony.util.DateUtil;
 
 import com.anthony.util.http.HTTPUtil;

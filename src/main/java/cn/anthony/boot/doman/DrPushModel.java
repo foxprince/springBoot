@@ -1,4 +1,4 @@
-package cn.anthony.moscreen.domain;
+package cn.anthony.boot.doman;
 
 public class DrPushModel {
 	private String phone;

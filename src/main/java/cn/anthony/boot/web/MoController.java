@@ -1,4 +1,4 @@
-package cn.anthony.boot.moscreen.web;
+package cn.anthony.boot.web;
 
 import java.io.IOException;
 import java.util.HashMap;
