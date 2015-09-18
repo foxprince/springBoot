@@ -1,15 +1,21 @@
 package cn.anthony.boot.moscreen.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.anthony.boot.web.BaseController;
+import cn.anthony.moscreen.domain.DrPushModel;
+import cn.anthony.moscreen.service.DrPushService;
 import cn.anthony.moscreen.util.RefactorUtil;
+import cn.anthony.moscreen.util.Resource;
 
 @Controller
-public class MrController {
-
+public class MrController extends BaseController {
+	@Autowired
+	DrPushService pushService;
 	/**
 	 * 该Controller的所有方法在调用前，先执行此@ModelAttribute方法
 	 */
@@ -20,12 +26,19 @@ public class MrController {
 	
 	@RequestMapping(value="/hzpz",produces = "text/plain;charset=UTF-8")
     public @ResponseBody String hzpz(@ModelAttribute("hzpzMr") HzpzMr item)  {
-    	System.out.println(RefactorUtil.getObjectParaMap(item));
+		System.out.println(request.getRemoteAddr());
+		System.out.println(RefactorUtil.getObjectParaMap(item));
+		pushService.push(Resource.LLTX_URL, toPushModelFromHzpz(item));
 		return "OK";
     }
+	private DrPushModel toPushModelFromHzpz(HzpzMr item) {
+		return new DrPushModel(item.mobile,item.mo,item.port,item.linkid,item.time,item.status,item.price);
+	}
+
 	@RequestMapping(value="/zxt",produces = "text/plain;charset=UTF-8")
     public @ResponseBody String zxt(@ModelAttribute("zxtMr") ZxtMr item)  {
-    	System.out.println(RefactorUtil.getObjectParaMap(item));
+		System.out.println(request.getRemoteAddr());
+		System.out.println(RefactorUtil.getObjectParaMap(item));
 		return "OK";
     }
 	
