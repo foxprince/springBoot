@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import cn.anthony.boot.doman.BaseEntity;
 import cn.anthony.boot.doman.BaseEntityRepository;
-import cn.anthony.boot.exception.BaseEntityNotFound;
+import cn.anthony.boot.exception.EntityNotFound;
 
 @Service
 public class BaseEntityService {
@@ -28,13 +28,11 @@ public class BaseEntityService {
         return shopRepository.findOne(id);
     }
  
-    @Transactional(rollbackOn=BaseEntityNotFound.class)
-    public BaseEntity delete(long id) throws BaseEntityNotFound {
+    @Transactional(rollbackOn=EntityNotFound.class)
+    public BaseEntity delete(long id) throws EntityNotFound {
         BaseEntity deletedBaseEntity = shopRepository.findOne(id);
-         
         if (deletedBaseEntity == null)
-            throw new BaseEntityNotFound();
-         
+            throw new EntityNotFound(BaseEntity.class.getName());
         shopRepository.delete(deletedBaseEntity);
         return deletedBaseEntity;
     }
@@ -44,11 +42,11 @@ public class BaseEntityService {
         return shopRepository.findAll();
     }
  
-    @Transactional(rollbackOn=BaseEntityNotFound.class)
-    public BaseEntity update(BaseEntity shop) throws BaseEntityNotFound {
+    @Transactional(rollbackOn=EntityNotFound.class)
+    public BaseEntity update(BaseEntity shop) throws EntityNotFound {
         BaseEntity updatedBaseEntity = shopRepository.findOne(shop.getId());
         if (updatedBaseEntity == null)
-            throw new BaseEntityNotFound();
+            throw new EntityNotFound(BaseEntity.class.getName());
         updatedBaseEntity.setTitle(shop.getTitle());
         updatedBaseEntity.setDescription(shop.getDescription());
         updatedBaseEntity.setModificationTime(Calendar.getInstance().getTime());

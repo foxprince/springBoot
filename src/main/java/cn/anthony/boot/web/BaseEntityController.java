@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.anthony.boot.doman.BaseEntity;
-import cn.anthony.boot.exception.BaseEntityNotFound;
+import cn.anthony.boot.exception.EntityNotFound;
 import cn.anthony.boot.service.BaseEntityService;
 
 @Controller
@@ -65,7 +65,7 @@ public class BaseEntityController {
     @RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
     public ModelAndView editBaseEntity(@ModelAttribute BaseEntity baseEntity,
             @PathVariable Integer id,
-            final RedirectAttributes redirectAttributes) throws BaseEntityNotFound {
+            final RedirectAttributes redirectAttributes) throws EntityNotFound {
          
         ModelAndView mav = new ModelAndView("redirect:/base/index");
         String message = "BaseEntity was successfully updated.";
@@ -78,7 +78,7 @@ public class BaseEntityController {
      
     @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
     public ModelAndView deleteBaseEntity(@PathVariable Integer id,
-            final RedirectAttributes redirectAttributes) throws BaseEntityNotFound {
+            final RedirectAttributes redirectAttributes) throws EntityNotFound {
          
         ModelAndView mav = new ModelAndView("redirect:/base/index");        
          
