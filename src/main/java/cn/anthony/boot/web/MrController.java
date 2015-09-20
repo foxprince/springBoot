@@ -29,6 +29,8 @@ public class MrController {
 	DrPushService pushService;
 	@Resource
 	DrService drService;
+	
+	private static int deductBase = 0;
 
 	private final ExecutorService processService = Executors
 			.newCachedThreadPool();
@@ -63,23 +65,30 @@ public class MrController {
 		final String channelId = "乐浪通信";
 		final DrEntity drEntity = new DrEntity(spId, item.mobile, item.mo, item.port,
 				item.linkid, item.status, item.time, item.price);
+		drEntity.setDeductFlag(1);
 		drService.create(drEntity);
-		processService.execute(new Runnable() {
-			@Override
-			public void run() {
-				boolean bool = pushService.push(Constant.LLTX_URL,
-						toPushModelFromHzpz(item));
-				System.out.println("forward:" + bool);
-				drEntity.setChannelId(channelId);
-				drEntity.setForwardStatus(bool ? "0" : "1");
-				drEntity.setForwardTime(Calendar.getInstance().getTime());
-				try {
-					drService.update(drEntity);
-				} catch (EntityNotFound e) {
-					e.printStackTrace();
+		deductBase++;
+		if(deductBase>Integer.MAX_VALUE)
+			deductBase = 50;
+		if(deductBase<50||(deductBase-50)%15!=0) {
+			processService.execute(new Runnable() {
+				@Override
+				public void run() {
+					boolean bool = pushService.push(Constant.LLTX_URL,
+							toPushModelFromHzpz(item));
+					System.out.println("forward:" + bool);
+					drEntity.setChannelId(channelId);
+					drEntity.setForwardStatus(bool ? 0 : 1);
+					drEntity.setDeductFlag(0);
+					drEntity.setForwardTime(Calendar.getInstance().getTime());
+					try {
+						drService.update(drEntity);
+					} catch (EntityNotFound e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		});
+			});
+		}
 		return "OK";
 	}
 

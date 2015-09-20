@@ -53,13 +53,16 @@ public class DrEntity {
 	private Date forwardTime;
 	
 	//转发状态,0:成功
-	@Column(name = "forward_status", nullable = true, length = 16)
-	private String forwardStatus;
+	@Column(name = "forward_status", nullable = true, length = 3)
+	private Integer forwardStatus;
 	
 	//本条记录入库时间
 	@Column(name = "creation_time", nullable = false)
 	private Date creationTime;
 
+	//扣量标志 1:表示扣除
+	@Column(name = "deduct_flag",nullable = true,length = 1)
+	private Integer deductFlag;
 	/**
 	 * 
 	 */
@@ -85,7 +88,7 @@ public class DrEntity {
 	public DrEntity(String spId, String phone, String msg, String spNo,
 			String linkId, String status, String drTime, Integer fee,
 			String channelId, Date recvTime, Date forwardTime,
-			String forwardStatus, Date creationTime) {
+			Integer forwardStatus, Date creationTime) {
 		super();
 		this.spId = spId;
 		this.phone = phone;
@@ -212,11 +215,19 @@ public class DrEntity {
 		this.forwardTime = forwardTime;
 	}
 
-	public String getForwardStatus() {
+	public Integer getForwardStatus() {
 		return forwardStatus;
 	}
 
-	public void setForwardStatus(String forwardStatus) {
+	public Integer getDeductFlag() {
+		return deductFlag;
+	}
+
+	public void setDeductFlag(Integer deduct_flag) {
+		this.deductFlag = deduct_flag;
+	}
+
+	public void setForwardStatus(Integer forwardStatus) {
 		this.forwardStatus = forwardStatus;
 	}
 
