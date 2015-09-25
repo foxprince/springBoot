@@ -35,7 +35,7 @@ public class DrEntity {
 	@Column(name = "status", nullable = true, length = 10)
 	private String status;
 	//产生状态报告的时间
-	@Column(name = "dr_time", nullable = false, length = 30)
+	@Column(name = "dr_time", nullable = true, length = 30)
 	private String drTime;
 	
 	@Column(name = "fee", nullable = true)

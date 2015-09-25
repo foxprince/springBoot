@@ -18,7 +18,6 @@ public class DrPushService {
 			String resp = HTTPUtil.get(url, HTTPUtil.toNameValuePairs(RefactorUtil.getObjectParaMap(model)));
 			if(resp.trim().equalsIgnoreCase("ok"))
 				bool = true;
-			System.out.println("push to lltx:"+bool);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

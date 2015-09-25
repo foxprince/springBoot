@@ -11,7 +11,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class HTTPUtil {
 		m.put("loginPwd", "232323");
 		m.put("objNo", "sdfsdfsdf");
 		m.put("shortMsg", "dfsdfsdf");
-		String url = "http://sms.ceeg.cn/receive.aspx";
+		//String url = "http://sms.ceeg.cn/receive.aspx";
 		
 	}
 
@@ -68,9 +67,7 @@ public class HTTPUtil {
 			HttpGet httpget = new HttpGet(url);
 			// 设置参数
 			String str = EntityUtils.toString(new UrlEncodedFormEntity(params,"utf-8"));
-			System.out.println(str);
 			httpget.setURI(new URI(httpget.getURI().toString() + "?" + str));
-			System.out.println("Executing request " + httpget.getRequestLine());
 			// Create a custom response handler
 			ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 				@Override
@@ -88,8 +85,6 @@ public class HTTPUtil {
 
 			};
 			responseBody = httpclient.execute(httpget, responseHandler);
-			System.out.println("----------------------------------------");
-			System.out.println(responseBody);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		} finally {
@@ -125,24 +120,6 @@ public class HTTPUtil {
 			httpclient.close();
 		}
 		return responseBody;
-	}
-
-	private static String createGetUrl(String url, Map m) {
-		if (m == null || m.size() == 0)
-			return url;
-		StringBuffer sb = new StringBuffer(url);
-		if (url.indexOf("?") < 0)
-			sb.append("?");
-		// Map m = pkg.getParamEntry();
-		for (Iterator it = m.entrySet().iterator(); it.hasNext();) {
-			Map.Entry entry = (Map.Entry) it.next();
-			String key = (String) entry.getKey();
-			String value = (String) entry.getValue();
-			sb.append(key + "=" + value);
-			if (it.hasNext())
-				sb.append("&");
-		}
-		return sb.toString();
 	}
 
 }

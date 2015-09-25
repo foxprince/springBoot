@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,11 +31,12 @@ public class MrController {
 	DrPushService pushService;
 	@Resource
 	DrService drService;
+	Logger debugLogger = LoggerFactory.getLogger(MrController.class);
+	Logger hzpzLogger = LoggerFactory.getLogger("hzpz");
 	
 	private static int deductBase = 0;
 
-	private final ExecutorService processService = Executors
-			.newCachedThreadPool();
+	private final ExecutorService processService = Executors.newCachedThreadPool();
 
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
@@ -51,7 +54,8 @@ public class MrController {
 	}
 
 	/**
-	 * 发送 by8#a1101（模糊） 到 10655562 发送 020#0402（模糊） 到 1065800883246
+	 * 发送 by8#a1101（模糊） 到 10655562 
+	 * 发送 020#0402（模糊） 到 1065800883246
 	 * 
 	 * @param item
 	 * @return
@@ -59,8 +63,8 @@ public class MrController {
 	@RequestMapping(value = "/hzpz", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody
 	String hzpz(@ModelAttribute("hzpzMr") final HzpzMr item) {
-		System.out.println(request.getRemoteAddr());
-		System.out.println(RefactorUtil.getObjectParaMap(item));
+		debugLogger.info(request.getRemoteAddr());
+		hzpzLogger.info(RefactorUtil.getObjectParaMap(item).toString());
 		String spId = "杭州平治";
 		final String channelId = "乐浪通信";
 		final DrEntity drEntity = new DrEntity(spId, item.mobile, item.mo, item.port,
@@ -74,9 +78,8 @@ public class MrController {
 			processService.execute(new Runnable() {
 				@Override
 				public void run() {
-					boolean bool = pushService.push(Constant.LLTX_URL,
-							toPushModelFromHzpz(item));
-					System.out.println("forward:" + bool);
+					boolean bool = pushService.push(Constant.LLTX_URL,toPushModelFromHzpz(item));
+					hzpzLogger.info("forward:" + bool);
 					drEntity.setChannelId(channelId);
 					drEntity.setForwardStatus(bool ? 0 : 1);
 					drEntity.setDeductFlag(0);
