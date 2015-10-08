@@ -3,7 +3,6 @@ package cn.anthony.boot.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.boot.util.RefactorUtil;
@@ -33,9 +32,10 @@ import com.anthony.util.http.HTTPUtil;
  2）我方服务器ip：60.191.122.30，60.12.140.148，请合作方做好ip访问限制。另外，如果需要模拟渠道方接口，请对60.12.140.94也开放权限。
  发送 020#0402（模糊）  到  1065800883246
  * Created by zj on 15-9-9.
+ * implements CommandLineRunner 
  */
 @Service
-public class HzpzService implements CommandLineRunner {
+public class HzpzService {
 	private static final String SPNUM = "1065800883246";
 	private static final String STATUS = "DELIVRD";
 	private static final String URL = "http://60.191.122.30/sms/sync.jsp";
@@ -86,7 +86,6 @@ public class HzpzService implements CommandLineRunner {
 
 	}
 
-	@Override
 	public void run(String... args) throws Exception {
 		try {
 			System.out.println(java.net.URLEncoder.encode("上行内容测试", "utf-8"));

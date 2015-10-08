@@ -61,13 +61,14 @@ public class BaseController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/m", method = RequestMethod.GET)
+	@RequestMapping(value = "/m/{name}", method = RequestMethod.GET)
 	public @ResponseBody
-	Map<String, Object> mo(@RequestParam Map<String, String> allRequestParams) {
+	Map<String, Object> mo(@PathVariable String name,@RequestParam Map<String, String> allRequestParams) {
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("phone", "13333333333");
 		m.put("mono", "106999999999");
 		m.put("msg", "测试内容");
+		m.put("name", name);
 		m.putAll(allRequestParams);
 		return m;
 	}

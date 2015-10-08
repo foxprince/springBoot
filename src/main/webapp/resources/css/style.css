@@ -1,0 +1,7 @@
+#main{
+    margin:0px auto;
+    float:none;
+}
+#bg{
+	background: #FFF url(../img/bg.jpg) repeat-x;
+}

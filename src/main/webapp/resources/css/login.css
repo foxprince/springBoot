@@ -1,0 +1,61 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Tahoma, Verdana, "宋体";
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+	background: #FFF url(../img/bg.jpg) repeat-x;
+}
+td1 {
+	bgcolor:#7F8ABD
+}
+td2 {
+	bgcolor:#CAD2D9
+}
+form {
+	padding: 0;
+	margin: 0;
+}
+
+.small_en {
+	font-size: 10px;
+}
+.inputbox {
+	background-color: transparent;
+	height: 25px;
+	width: 180px;
+	font-family: Tahoma, Verdana, "宋体";
+	font-size: 12px;
+	border-bottom: solid 1px #333333;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+}
+.buttom {
+	height: 25px;
+	width: 80px;
+	font-family: Tahoma, Verdana, "宋体";
+	font-size: 12px;
+}
+
+#company_logo {
+	padding: 38px 0 0 33px;
+	width: 217px;
+	height: 90px;
+}
+#loginbox {
+	margin: 0 auto 0 auto;
+	width: 500px;
+	height: 251px;
+	background: url(../img/bg_04.gif) repeat-x;
+}
+#loginbox_logo {
+	#background: url(../img/logo.png) no-repeat 345px 178px;
+}
+#footer {
+	margin: 0 auto 0 auto;
+	width: 426px;
+	height: auto;
+	padding: 115px 0 0 0;
+}

@@ -3,8 +3,6 @@ package cn.anthony.boot.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.boot.util.RefactorUtil;
@@ -23,13 +21,13 @@ Ivr业务：
 starttime 开始时间，格式：2010-10-01 20:00:00
 endtime 结束时间，格式同上
 total 时长（分钟）
-
+implements CommandLineRunner
  */
 @Service
-public class ZxtService implements CommandLineRunner {
+public class ZxtService  {
 	private static final String URL = "http://60.191.122.30/sms/sync.jsp";
 	public static void main(String[] args) {
-		SpringApplication.run(HzpzService.class, args);
+		//SpringApplication.run(HzpzService.class, args);
 		
 	}
 	public boolean mo(String mobile,String mo,String destNo,String linkId,int price) {
@@ -71,7 +69,6 @@ public class ZxtService implements CommandLineRunner {
 
 	}
 
-	@Override
 	public void run(String... args) throws Exception {
 		try {
 			System.out.println(java.net.URLEncoder.encode("上行内容测试", "utf-8"));

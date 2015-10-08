@@ -8,11 +8,15 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,9 +27,11 @@ import cn.anthony.boot.exception.EntityNotFound;
 import cn.anthony.boot.service.DrPushService;
 import cn.anthony.boot.service.DrService;
 import cn.anthony.boot.util.Constant;
+import cn.anthony.boot.util.ControllerUtil;
 import cn.anthony.boot.util.RefactorUtil;
 
 @Controller
+@RequestMapping(value="/dr")
 public class MrController {
 	@Autowired
 	DrPushService pushService;
@@ -53,6 +59,18 @@ public class MrController {
 		this.session = request.getSession();
 	}
 
+	@RequestMapping(value={"/","index","/list"})
+	public String listPage(@Valid PageRequest pageRequest,BindingResult result,Model m) {
+		if(result.hasErrors()) {
+            return "/dr/list";
+        }
+		Page<DrEntity> drPage = drService.find(pageRequest.page,pageRequest.size);
+		ControllerUtil.setPageVariables(m, drPage);
+	    return "/dr/list";
+	}
+	
+	 
+	
 	/**
 	 * 发送 by8#a1101（模糊） 到 10655562 
 	 * 发送 020#0402（模糊） 到 1065800883246

@@ -6,6 +6,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.boot.doman.BaseEntity;
@@ -52,4 +55,9 @@ public class BaseEntityService {
         updatedBaseEntity.setModificationTime(Calendar.getInstance().getTime());
         return updatedBaseEntity;
     }
+
+	public Page<BaseEntity> find(Integer pageNumber, Integer size) {
+		PageRequest pageRequest = new PageRequest(pageNumber - 1, size, Sort.Direction.DESC, "id");
+	    return shopRepository.findAll(pageRequest);
+	}
 }

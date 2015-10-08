@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+			<!-- left menu starts -->
+			<div class="span2 main-menu-span">
+				<div class="well nav-collapse sidebar-nav">
+					<ul class="nav nav-tabs nav-stacked main-menu">
+						<li class="nav-header hidden-tablet">快捷通道</li>
+						<li><a class="ajax-link" href="#"><i class="icon-home"></i><span class="hidden-tablet"> 仪表盘</span></a></li>
+						<li><a class="ajax-link" href="/dr/list"><i class="icon-th"></i><span class="hidden-tablet"> 短代日志</span></a></li>
+						<li><a class="ajax-link" href="#"><i class="icon-th"></i><span class="hidden-tablet"> 代码配置</span></a></li>
+						<li class="nav-header hidden-tablet">统计报表</li>
+						<li><a class="ajax-link" href="#"><i class="icon-th"></i><span class="hidden-tablet"> 单日统计</span></a></li>
+						<li><a class="ajax-link" href="#"><i class="icon-th"></i><span class="hidden-tablet"> 实时统计</span></a></li>
+						<li><a class="ajax-link" href="#"><i class="icon-th"></i><span class="hidden-tablet"> 综合统计</span></a></li>
+						<li class="nav-header hidden-tablet">系统管理</li>
+						<li><a class="ajax-link" href="#"><i class="icon-ban-circle"></i><span class="hidden-tablet"> 黑名单</span></a></li>
+						<li><a class="ajax-link" href="#"><i class=" icon-remove-sign"></i><span class="hidden-tablet"> 错误代码</span></a></li>
+						<li><a class="ajax-link" href="#"><i class="icon-lock"></i><span class="hidden-tablet"> 关键词</span></a></li>
+						
+					</ul>
+					<!--  <label id="for-is-ajax" class="hidden-tablet" for="is-ajax"><input id="is-ajax" type="checkbox" checked="true"> 使用淡入淡出</label>-->
+				</div><!--/.well -->
+			</div><!--/span-->
+			<!-- left menu ends -->
+			
+			<noscript>
+				<div class="alert alert-block span10">
+					<h4 class="alert-heading">注意!</h4>
+					<p>请启用<a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>以便能正常访问本系统。 </p>
+				</div>
+			</noscript>

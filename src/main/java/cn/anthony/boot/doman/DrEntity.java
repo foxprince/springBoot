@@ -31,7 +31,7 @@ public class DrEntity {
 	
 	@Column(name = "link_id", nullable = false, length = 16)
 	private String linkId;
-	
+	//状态报告
 	@Column(name = "status", nullable = true, length = 10)
 	private String status;
 	//产生状态报告的时间

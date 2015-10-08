@@ -10,9 +10,9 @@
 <body>
 	<h1>Home page</h1>
 	<p>
-		Welcome to "BaseEntity application".<br /> <i>${message}</i><br /> <a
-			href="${pageContext.request.contextPath}/base/create">Create
-			a new baseEntity</a><br /> <a
+		Welcome to "BaseEntity application".<br /> <i>${message}</i><br /> 
+		<a href="${pageContext.request.contextPath}/base/create">Createa new baseEntity</a><br /> 
+		<a
 			href="${pageContext.request.contextPath}/base/list">View all
 			baseEntitys</a><br />
 	</p>
