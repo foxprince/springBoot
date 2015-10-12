@@ -6,17 +6,12 @@ import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,49 +22,23 @@ import cn.anthony.boot.exception.EntityNotFound;
 import cn.anthony.boot.service.DrPushService;
 import cn.anthony.boot.service.DrService;
 import cn.anthony.boot.util.Constant;
-import cn.anthony.boot.util.ControllerUtil;
 import cn.anthony.boot.util.RefactorUtil;
 
 @Controller
-@RequestMapping(value="/dr")
 public class MrController {
 	@Autowired
-	DrPushService pushService;
+	private DrPushService pushService;
 	@Resource
-	DrService drService;
-	Logger debugLogger = LoggerFactory.getLogger(MrController.class);
-	Logger hzpzLogger = LoggerFactory.getLogger("hzpz");
+	private DrService drService;
+	private Logger debugLogger = LoggerFactory.getLogger(MrController.class);
+	private Logger hzpzLogger = LoggerFactory.getLogger("hzpz");
+	private Logger zxtLogger = LoggerFactory.getLogger("zxt");
+	private Logger rmwLogger = LoggerFactory.getLogger("rmw");
 	
 	private static int deductBase = 0;
 
 	private final ExecutorService processService = Executors.newCachedThreadPool();
 
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
-	protected HttpSession session;
-
-	/**
-	 * 该Controller的所有方法在调用前，先执行此@ModelAttribute方法
-	 */
-	@ModelAttribute
-	public void setReqAndRes(HttpServletRequest request,
-			HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
-		this.session = request.getSession();
-	}
-
-	@RequestMapping(value={"/","index","/list"})
-	public String listPage(@Valid PageRequest pageRequest,BindingResult result,Model m) {
-		if(result.hasErrors()) {
-            return "/dr/list";
-        }
-		Page<DrEntity> drPage = drService.find(pageRequest.page,pageRequest.size);
-		ControllerUtil.setPageVariables(m, drPage);
-	    return "/dr/list";
-	}
-	
-	 
 	
 	/**
 	 * 发送 by8#a1101（模糊） 到 10655562 
@@ -80,7 +49,7 @@ public class MrController {
 	 */
 	@RequestMapping(value = "/hzpz", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody
-	String hzpz(@ModelAttribute("hzpzMr") final HzpzMr item) {
+	String hzpz(@ModelAttribute("hzpzMr") final HzpzMr item,HttpServletRequest request) {
 		debugLogger.info(request.getRemoteAddr());
 		hzpzLogger.info(RefactorUtil.getObjectParaMap(item).toString());
 		String spId = "杭州平治";
@@ -119,14 +88,195 @@ public class MrController {
 
 	@RequestMapping(value = "/zxt", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody
-	String zxt(@ModelAttribute("zxtMr") ZxtMr item) {
-		System.out.println(request.getRemoteAddr());
-		System.out.println(RefactorUtil.getObjectParaMap(item));
+	String zxt(@ModelAttribute("zxtMr") ZxtMr item,HttpServletRequest request) {
+		debugLogger.info(request.getRemoteAddr());
+		zxtLogger.info(RefactorUtil.getObjectParaMap(item).toString());
+		String spId = "政信通";
+		final DrEntity drEntity = new DrEntity(spId, item.mobile, item.cmdid, item.orderdest,
+				item.linkid, "DELIVRD", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"), item.fee);
+		drEntity.setDeductFlag(1);
+		drService.create(drEntity);
+		deductBase++;
+		if(deductBase>Integer.MAX_VALUE)
+			deductBase = 50;
+		if(deductBase<50||(deductBase-50)%15!=0) {
+			//processService.execute(new Runnable() { @Override public void run() {
+			//}});
+		}
 		return "OK";
+	}
+	
+	@RequestMapping(value = "/rmwmo", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody
+	String rmwmo(@ModelAttribute("rmwMo") RmwMo item,HttpServletRequest request) {
+		debugLogger.info(request.getRemoteAddr());
+		rmwLogger.info(RefactorUtil.getObjectParaMap(item).toString());
+		String spId = "人民网";
+		final DrEntity drEntity = new DrEntity(spId, item.usernumber, item.mocontent, item.spnumber,item.linkid);
+		drEntity.setDeductFlag(0);
+		drService.create(drEntity);
+		deductBase++;
+		if(deductBase>Integer.MAX_VALUE)
+			deductBase = 50;
+		if(deductBase<50||(deductBase-50)%15!=0) {
+			//processService.execute(new Runnable() { @Override public void run() {
+			//}});
+		}
+		return "result=0";
+	}
+	@RequestMapping(value = "/rmwdr", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody
+	String rmwdr(@ModelAttribute("rmwDr") RmwDr item,HttpServletRequest request) {
+		debugLogger.info(request.getRemoteAddr());
+		rmwLogger.info(RefactorUtil.getObjectParaMap(item).toString());
+		String spId = "人民网";
+		final DrEntity drEntity = drService.findByLinkId(spId, item.linkid);
+		item.setReporttime(item.reporttime);
+		item.setStat(item.stat);
+		item.setFeecode(item.feecode);
+		drEntity.setDeductFlag(0);
+		try {
+			drService.update(drEntity);
+			deductBase++;
+			if(deductBase>Integer.MAX_VALUE)
+				deductBase = 50;
+			if(deductBase<50||(deductBase-50)%15!=0) {
+				//processService.execute(new Runnable() { @Override public void run() {
+				//}});
+			}
+		} catch (EntityNotFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "result=0";
 	}
 
 }
+class RmwMo {
+	String msgtype;//	消息类型	mo
+	String usernumber;//	手机号码	13711111111
+	String spnumber;//	长号码	10661111
+	String mocontent;//	MO消息内容	T你好
+	String linkid;//	鉴权标示	1478451247
+	String motime;//	上行时间	2013-03-05+16%3A56%3A47.0
+	String serviceid;//	业务代码	AABBCC
+	String productid;//	产品代码	1001
+	String gateway;//	网关代码	cmcc
+	public String getMsgtype() {
+		return msgtype;
+	}
+	public void setMsgtype(String msgtype) {
+		this.msgtype = msgtype;
+	}
+	public String getUsernumber() {
+		return usernumber;
+	}
+	public void setUsernumber(String usernumber) {
+		this.usernumber = usernumber;
+	}
+	public String getSpnumber() {
+		return spnumber;
+	}
+	public void setSpnumber(String spnumber) {
+		this.spnumber = spnumber;
+	}
+	public String getMocontent() {
+		return mocontent;
+	}
+	public void setMocontent(String mocontent) {
+		this.mocontent = mocontent;
+	}
+	public String getLinkid() {
+		return linkid;
+	}
+	public void setLinkid(String linkid) {
+		this.linkid = linkid;
+	}
+	public String getMotime() {
+		return motime;
+	}
+	public void setMotime(String motime) {
+		this.motime = motime;
+	}
+	public String getServiceid() {
+		return serviceid;
+	}
+	public void setServiceid(String serviceid) {
+		this.serviceid = serviceid;
+	}
+	public String getProductid() {
+		return productid;
+	}
+	public void setProductid(String productid) {
+		this.productid = productid;
+	}
+	public String getGateway() {
+		return gateway;
+	}
+	public void setGateway(String gateway) {
+		this.gateway = gateway;
+	}
 
+}
+class RmwDr {
+	String msgtype;//	消息类型	report	
+	String usernumber;//	手机号码	13711111111	
+	String linkid;//	鉴权标识	1478451247	
+	Integer feecode;//	费率代码	200	单位:分
+	String stat;//	状态报告	DELIVRD	DELIVRD 表示成功
+	String reporttime;//	状态报告时间	2013-03-05+16%3A57%3A01.0	
+	String gateway;//	对应网关	cmcc	
+	String productid;//	产品编号	1001	
+	public String getMsgtype() {
+		return msgtype;
+	}
+	public void setMsgtype(String msgtype) {
+		this.msgtype = msgtype;
+	}
+	public String getUsernumber() {
+		return usernumber;
+	}
+	public void setUsernumber(String usernumber) {
+		this.usernumber = usernumber;
+	}
+	public String getLinkid() {
+		return linkid;
+	}
+	public void setLinkid(String linkid) {
+		this.linkid = linkid;
+	}
+	public Integer getFeecode() {
+		return feecode;
+	}
+	public void setFeecode(Integer feecode) {
+		this.feecode = feecode;
+	}
+	public String getStat() {
+		return stat;
+	}
+	public void setStat(String stat) {
+		this.stat = stat;
+	}
+	public String getReporttime() {
+		return reporttime;
+	}
+	public void setReporttime(String reporttime) {
+		this.reporttime = reporttime;
+	}
+	public String getGateway() {
+		return gateway;
+	}
+	public void setGateway(String gateway) {
+		this.gateway = gateway;
+	}
+	public String getProductid() {
+		return productid;
+	}
+	public void setProductid(String productid) {
+		this.productid = productid;
+	}
+
+}
 class HzpzMr {
 	String mobile;
 	String mo;

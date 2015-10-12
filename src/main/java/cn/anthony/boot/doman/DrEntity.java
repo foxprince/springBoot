@@ -76,6 +76,26 @@ public class DrEntity {
 	 * @param msg
 	 * @param spNo
 	 * @param linkId
+	 * @param creationTime
+	 */
+	public DrEntity(String spId, String phone, String msg, String spNo,
+			String linkId) {
+		super();
+		this.spId = spId;
+		this.phone = phone;
+		this.msg = msg;
+		this.spNo = spNo;
+		this.linkId = linkId;
+		this.recvTime = Calendar.getInstance().getTime();
+		this.creationTime = Calendar.getInstance().getTime();
+	}
+
+	/**
+	 * @param spId
+	 * @param phone
+	 * @param msg
+	 * @param spNo
+	 * @param linkId
 	 * @param status
 	 * @param drTime
 	 * @param fee

@@ -160,7 +160,7 @@ public class StringTools {
         return arrOut;
     }
     
-    public static List splitString(String src,String token) {
+    public static List<String> splitString(String src,String token) {
     	List<String> l = new LinkedList<String>();
     	StringTokenizer st = new StringTokenizer(src,token);
     	while(st.hasMoreTokens())
@@ -168,6 +168,14 @@ public class StringTools {
     	return l;
     } 
     
+    public static boolean isValidPhone(String phone) {
+		if(StringTools.checkNull(phone)==null)
+			return false;
+		for (int i = 0; i < phone.length(); i++)
+			if ((phone.charAt(i) < '0') || (phone.charAt(i) > '9'))
+				return false;
+		return true;
+	}
     public static String getChineseOnly(String src) {
     	char ch[] = src.toCharArray();
 		StringBuffer buffer = new StringBuffer();

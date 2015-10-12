@@ -22,7 +22,7 @@
 						<a href="../main/">首页</a> <span class="divider">/</span>
 					</li>
 					<li>
-						<a href="./list">发送日志</a>
+						<a href="./">发送日志</a>
 					</li>
 				</ul>
 			</div>
@@ -38,24 +38,36 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<form:form class="well form-inline" name="noSelect" >
+						<form:form class="well form-inline" action="list" commandName="drPageRequest" method="POST">
 						  <table class="table table-condensed table-bordered">
 							<script src="../resources/js/dateControl.js"></script>
 							<tr bgcolor="#F3F3F3">
 								<td>
-									<label class="control-label" >日期：</lable>
-									<input type="text" name="checkDay" data-date-format="yyyy-mm-dd" class="input-medium form_datetime"    />
+									<label class="control-label" >起始日期：</lable>
+									<form:input  path="beginTime" class="input-medium form_datetime" />
+									<form:errors path="beginTime" cssclass="error"/>
 								</td>
 								<td>
-									<label class="control-label" >手机号码：</lable><textarea class="input-medium" name="phoneStr" placeHolder="多个号码用半角逗号隔开" ></textarea>
+									<label class="control-label" >结束日期：</lable>
+									<form:input  path="endTime" class="input-medium form_datetime" />
+									<form:errors path="endTime" cssclass="error"/>
 								</td>
 								<td align="center" >
-									<select name="treeId" id="selectError" data-rel="chosen" class="input-medium">
-										<option value="0">合作伙伴</option>
-										
-									</select>
+									<form:select path="spId" id="selectError" data-rel="chosen" class="input-medium">  
+							            <form:option value="0" label="--SP--"/>  
+							            <form:options items="${spMap}" />  
+							        </form:select>  
 								</td>
-								
+								<td>
+									<label class="control-label" >手机号码：</lable><form:textarea class="input-medium" path="phoneStr" placeHolder="多个号码用半角逗号隔开" />
+									<form:errors path="phoneStr" cssclass="error"/>
+								</td>
+								<td>
+									<form:select path="channelId"  data-rel="chosen" class="input-medium">  
+							            <form:option value="0" label="--渠道--"/>  
+							            <form:options items="${channelMap}" />  
+							        </form:select>  
+								</td>
 								<td align="center"  >
 									<!-- <div class="form-actions center"> -->
 									  <button type="submit" class="btn btn-primary">查看</button>
@@ -125,8 +137,8 @@
 
 							<div class="row-fluid center">
 								<div class="span4">
-								<form:form commandName="pageRequest" method="GET">每页:
-								<form:input size="2" path="size" />
+								<form:form action="list" commandName="drPageRequest" method="GET">每页:
+								<form:input  path="size" class="input-short"/>
 								<input type="submit" value="条"/><form:errors path="size" cssclass="error"/>
 								</form:form>
 								</div>
@@ -134,8 +146,8 @@
 									共${total}条，总${totalPages}页。
 								</div>
 								<div class="span4">
-								<form:form commandName="pageRequest" method="GET">到第:
-								<form:input type="text" size="2" path="page" ></form:input>
+								<form:form action="list" commandName="drPageRequest" method="GET">到第:
+								<form:input type="text"  path="page" class="input-short"></form:input>
 								<input type="submit" value="页"/>
 								<form:errors path="page" cssclass="error"></form:errors></form:form>
 								</div>
