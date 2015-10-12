@@ -49,7 +49,10 @@ public class DrService {
     }
     
     public DrEntity findByLinkId(String spId,String linkId) {
-    	return drRepository.findBySpIdAndLinkId(spId,linkId);
+    	Page<DrEntity> p = drRepository.findBySpIdAndLinkId(spId,linkId,new PageRequest(0, 1, Sort.Direction.DESC, "id"));
+    	if(p!=null&&p.getSize()>0)
+    		return p.getContent().get(0);
+    	return null;
     }
     
     public Map<String,String> getSpMap() {

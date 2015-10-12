@@ -22,7 +22,7 @@ public interface DrEntityRepository extends JpaRepository<DrEntity, Long> {
 
 	public Page<DrEntity> findAll(Specification<DrEntity> spec, Pageable p);
 
-	DrEntity findBySpIdAndLinkId(String spId, String linkId);
+	Page<DrEntity> findBySpIdAndLinkId(String spId, String linkId,Pageable p);
 
 
 }
