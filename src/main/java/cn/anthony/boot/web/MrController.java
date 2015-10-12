@@ -146,12 +146,79 @@ public class MrController {
 					//}});
 				}
 			} catch (EntityNotFound e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return "result=0";
 	}
+	
+	@RequestMapping(value = "/rmwivr", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody
+	String rmwivr(@ModelAttribute("rmwIvr") RmwIvr item,HttpServletRequest request) {
+		debugLogger.info(request.getRemoteAddr());
+		rmwLogger.info(RefactorUtil.getObjectParaMap(item).toString());
+		return "result=0";
+	}
+
+}
+class RmwIvr {
+	String msgtype;//	消息类型	ivr	
+	String usernumber;//	手机号码	13711111111	
+	String callednumber;//	被叫号码	12590623XXXX	
+	Integer feecode;	//费率代码	200	单位:分
+	String starttime;//	计费起始时间	2013-03-05+16%3A57%3A01.0	
+	String endtime;//	计费结束时间	2013-03-05+16%3A57%3A01.0	
+	String gateway;//	对应网关	cmcc	
+	String productid;//	产品编号	1001	
+	public String getMsgtype() {
+		return msgtype;
+	}
+	public void setMsgtype(String msgtype) {
+		this.msgtype = msgtype;
+	}
+	public String getUsernumber() {
+		return usernumber;
+	}
+	public void setUsernumber(String usernumber) {
+		this.usernumber = usernumber;
+	}
+	public String getCallednumber() {
+		return callednumber;
+	}
+	public void setCallednumber(String callednumber) {
+		this.callednumber = callednumber;
+	}
+	public Integer getFeecode() {
+		return feecode;
+	}
+	public void setFeecode(Integer feecode) {
+		this.feecode = feecode;
+	}
+	public String getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+	public String getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+	public String getGateway() {
+		return gateway;
+	}
+	public void setGateway(String gateway) {
+		this.gateway = gateway;
+	}
+	public String getProductid() {
+		return productid;
+	}
+	public void setProductid(String productid) {
+		this.productid = productid;
+	}
+	
 
 }
 class RmwMo {
