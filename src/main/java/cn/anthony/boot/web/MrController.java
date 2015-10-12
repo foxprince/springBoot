@@ -131,22 +131,24 @@ public class MrController {
 		rmwLogger.info(RefactorUtil.getObjectParaMap(item).toString());
 		String spId = "人民网";
 		final DrEntity drEntity = drService.findByLinkId(spId, item.linkid);
-		item.setReporttime(item.reporttime);
-		item.setStat(item.stat);
-		item.setFeecode(item.feecode);
-		drEntity.setDeductFlag(0);
-		try {
-			drService.update(drEntity);
-			deductBase++;
-			if(deductBase>Integer.MAX_VALUE)
-				deductBase = 50;
-			if(deductBase<50||(deductBase-50)%15!=0) {
-				//processService.execute(new Runnable() { @Override public void run() {
-				//}});
+		if(drEntity != null) {
+			drEntity.setStatus(item.stat);
+			drEntity.setFee(item.feecode);
+			drEntity.setRecvTime(Calendar.getInstance().getTime());
+			drEntity.setDeductFlag(0);
+			try {
+				drService.update(drEntity);
+				deductBase++;
+				if(deductBase>Integer.MAX_VALUE)
+					deductBase = 50;
+				if(deductBase<50||(deductBase-50)%15!=0) {
+					//processService.execute(new Runnable() { @Override public void run() {
+					//}});
+				}
+			} catch (EntityNotFound e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (EntityNotFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return "result=0";
 	}
