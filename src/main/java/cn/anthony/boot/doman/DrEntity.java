@@ -1,5 +1,6 @@
 package cn.anthony.boot.doman;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,13 +21,13 @@ public class DrEntity {
 	@Column(name = "sp_id", nullable = false, length = 20)
 	private String spId;
 	
-	@Column(name = "phone", nullable = false, length = 11)
+	@Column(name = "phone", nullable = true, length = 11)
 	private String phone;
 	
-	@Column(name = "msg", nullable = false, length = 50)
+	@Column(name = "msg", nullable = true, length = 50)
 	private String msg;
 	
-	@Column(name = "sp_no", nullable = false, length = 21)
+	@Column(name = "sp_no", nullable = true, length = 21)
 	private String spNo;
 	
 	@Column(name = "link_id", nullable = false, length = 16)
@@ -58,7 +59,7 @@ public class DrEntity {
 	
 	//本条记录入库时间
 	@Column(name = "creation_time", nullable = false)
-	private Date creationTime;
+	private Timestamp creationTime;
 
 	//扣量标志 1:表示扣除
 	@Column(name = "deduct_flag",nullable = true,length = 1)
@@ -87,42 +88,7 @@ public class DrEntity {
 		this.spNo = spNo;
 		this.linkId = linkId;
 		this.recvTime = Calendar.getInstance().getTime();
-		this.creationTime = Calendar.getInstance().getTime();
-	}
-
-	/**
-	 * @param spId
-	 * @param phone
-	 * @param msg
-	 * @param spNo
-	 * @param linkId
-	 * @param status
-	 * @param drTime
-	 * @param fee
-	 * @param channelId
-	 * @param recvTime
-	 * @param forwardTime
-	 * @param forwardStatus
-	 * @param creationTime
-	 */
-	public DrEntity(String spId, String phone, String msg, String spNo,
-			String linkId, String status, String drTime, Integer fee,
-			String channelId, Date recvTime, Date forwardTime,
-			Integer forwardStatus, Date creationTime) {
-		super();
-		this.spId = spId;
-		this.phone = phone;
-		this.msg = msg;
-		this.spNo = spNo;
-		this.linkId = linkId;
-		this.status = status;
-		this.drTime = drTime;
-		this.fee = fee;
-		this.channelId = channelId;
-		this.recvTime = recvTime;
-		this.forwardTime = forwardTime;
-		this.forwardStatus = forwardStatus;
-		this.creationTime = creationTime;
+		this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	}
 
 	public DrEntity(String spId, String phone, String msg, String spNo,
@@ -137,7 +103,7 @@ public class DrEntity {
 		this.drTime = drTime;
 		this.fee = fee;
 		this.recvTime = Calendar.getInstance().getTime();
-		this.creationTime = Calendar.getInstance().getTime();
+		this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	}
 	public Long getId() {
 		return id;
@@ -251,12 +217,14 @@ public class DrEntity {
 		this.forwardStatus = forwardStatus;
 	}
 
-	public Date getCreationTime() {
+	public Timestamp getCreationTime() {
 		return creationTime;
 	}
 
-	public void setCreationTime(Date creationTime) {
+	public void setCreationTime(Timestamp creationTime) {
 		this.creationTime = creationTime;
 	}
+
+	
 	
 }

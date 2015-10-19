@@ -53,8 +53,7 @@
 									<form:errors path="endTime" cssclass="error"/>
 								</td>
 								<td align="center" >
-									<form:select path="spId" id="selectError" data-rel="chosen" class="input-medium">  
-							            <form:option value="0" label="--SP--"/>  
+									SP：<form:select path="spId"  data-rel="chosen" class="input-medium">  
 							            <form:options items="${spMap}" />  
 							        </form:select>  
 								</td>
@@ -63,8 +62,7 @@
 									<form:errors path="phoneStr" cssclass="error"/>
 								</td>
 								<td>
-									<form:select path="channelId"  data-rel="chosen" class="input-medium">  
-							            <form:option value="0" label="--渠道--"/>  
+									渠道：<form:select path="channelId"  data-rel="chosen" class="input-medium">  
 							            <form:options items="${channelMap}" />  
 							        </form:select>  
 								</td>

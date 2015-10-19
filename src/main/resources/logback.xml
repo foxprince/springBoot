@@ -75,6 +75,28 @@
 			</fileNamePattern>
 		</rollingPolicy>
 	</appender>
+	<appender name="fh" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${user.home}/logs/fh.log</File>
+		<encoder><pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} : %m%n</pattern></encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${user.home}/logs/fh.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+		</rollingPolicy>
+	</appender>
+	<appender name="lltx" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${user.home}/logs/lltx.log</File>
+		<encoder><pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} : %m%n</pattern></encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${user.home}/logs/lltx.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+		</rollingPolicy>
+	</appender>
 	<logger name="hzpz" additivity="false" level="INFO">
 		<appender-ref ref="hzpz" />
 	</logger>
@@ -96,7 +118,8 @@
 		<appender-ref ref="hzpz" />
 		<appender-ref ref="zxt" />
 		<appender-ref ref="rmw" />
-		
+		<appender-ref ref="fh" />
+		<appender-ref ref="lltx" />
 	</root>
 
 </configuration>

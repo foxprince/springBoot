@@ -1,5 +1,6 @@
 package cn.anthony.boot.web;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import cn.anthony.boot.service.DrService;
 import cn.anthony.boot.util.Constant;
 import cn.anthony.boot.util.RefactorUtil;
 
+import com.bestv.sdk.bean.PayResultReq;
+
 @Controller
 public class MrController {
 	@Autowired
@@ -34,11 +38,13 @@ public class MrController {
 	private Logger hzpzLogger = LoggerFactory.getLogger("hzpz");
 	private Logger zxtLogger = LoggerFactory.getLogger("zxt");
 	private Logger rmwLogger = LoggerFactory.getLogger("rmw");
-	
+	private Logger fhLogger = LoggerFactory.getLogger("fh");
+	private Logger lltxLogger = LoggerFactory.getLogger("lltx");
+
 	private static int deductBase = 0;
 
 	private final ExecutorService processService = Executors.newCachedThreadPool();
-
+	
 	
 	/**
 	 * 发送 by8#a1101（模糊） 到 10655562 
@@ -53,7 +59,6 @@ public class MrController {
 		debugLogger.info(request.getRemoteAddr());
 		hzpzLogger.info(RefactorUtil.getObjectParaMap(item).toString());
 		String spId = "杭州平治";
-		final String channelId = "乐浪通信";
 		final DrEntity drEntity = new DrEntity(spId, item.mobile, item.mo, item.port,
 				item.linkid, item.status, item.time, item.price);
 		drEntity.setDeductFlag(1);
@@ -65,23 +70,26 @@ public class MrController {
 			processService.execute(new Runnable() {
 				@Override
 				public void run() {
-					boolean bool = pushService.push(Constant.LLTX_URL,toPushModelFromHzpz(item));
-					hzpzLogger.info("forward:" + bool);
-					drEntity.setChannelId(channelId);
-					drEntity.setForwardStatus(bool ? 0 : 1);
-					drEntity.setDeductFlag(0);
-					drEntity.setForwardTime(Calendar.getInstance().getTime());
-					try {
-						drService.update(drEntity);
-					} catch (EntityNotFound e) {
-						e.printStackTrace();
-					}
+					toLltx(toPushModelFromHzpz(item), drEntity);
 				}
 			});
 		}
 		return "OK";
 	}
-
+	private void toLltx(final DrPushModel drPushModel,final DrEntity drEntity) {
+		final String channelId = "乐浪通信";
+		boolean bool = pushService.push(Constant.LLTX_URL,drPushModel);
+		lltxLogger.info(RefactorUtil.getObjectParaMap(drPushModel).toString()+":" + bool);
+		drEntity.setChannelId(channelId);
+		drEntity.setForwardStatus(bool ? 0 : 1);
+		drEntity.setDeductFlag(0);
+		drEntity.setForwardTime(Calendar.getInstance().getTime());
+		try {
+			drService.update(drEntity);
+		} catch (EntityNotFound e) {
+			e.printStackTrace();
+		}
+	}
 	private DrPushModel toPushModelFromHzpz(HzpzMr item) {
 		return new DrPushModel(item.mobile, item.mo, item.port, item.linkid,item.time, item.status, item.price);
 	}
@@ -159,6 +167,90 @@ public class MrController {
 		rmwLogger.info(RefactorUtil.getObjectParaMap(item).toString());
 		return "result=0";
 	}
+	
+	/**
+	 * 百视通支付结果回调通知
+	 * @param item
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/bestpr", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String bestpr(@ModelAttribute("payResultReq") PayResultReq item,HttpServletRequest request) {
+		debugLogger.info(request.getRemoteAddr());
+		rmwLogger.info(RefactorUtil.getObjectParaMap(item).toString());
+		return "true";
+	}
+	
+	/**
+	 * 泛海ddo
+	 */
+	@RequestMapping(value = "/fhddo", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String fhddo(@ModelAttribute("payResultReq") final FhDdo item,HttpServletRequest request) {
+		debugLogger.info(request.getRemoteAddr());
+		fhLogger.info(RefactorUtil.getObjectParaMap(item).toString());
+		String spId = "泛海";
+		final DrEntity drEntity = new DrEntity();
+		drEntity.setSpId(spId);
+		drEntity.setLinkId(item.order_id);
+		drEntity.setStatus("DELIVRD");
+			drEntity.setPhone(item.mobile);
+			drEntity.setFee(item.fee);
+			try {
+				drEntity.setRecvTime(DateUtils.parseDate(item.time, "yyyyMMddHHmmss"));
+				drEntity.setDeductFlag(0);
+				drService.create(drEntity);
+				deductBase++;
+				if(deductBase>Integer.MAX_VALUE)
+					deductBase = 50;
+				if(deductBase<50||(deductBase-50)%15!=0) {
+					processService.execute(new Runnable() { @Override public void run() {
+						toLltx(new DrPushModel(item.mobile, "", "", item.order_id,DateFormatUtils.format(drEntity.getRecvTime(), "yyyy-MM-dd HH:mm:ss"), "DELIVRD", item.fee),drEntity);
+					}});
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		return "ok";
+	}
+
+}
+class FhDdo {
+	String order_id;//	String	否	我方系统唯一交易id
+	Integer fee;//	String	否	请求金额 单位分 2元=200分
+	String ext;//	String	是	透传参数
+	String time;//	String	否	交易时间，格式：20141204180601
+	String mobile;//	String	是	手机号码，不一定有该参数
+	public String getOrder_id() {
+		return order_id;
+	}
+	public void setOrder_id(String order_id) {
+		this.order_id = order_id;
+	}
+	public Integer getFee() {
+		return fee;
+	}
+	public void setFee(Integer fee) {
+		this.fee = fee;
+	}
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	
 
 }
 class RmwIvr {
