@@ -193,23 +193,23 @@ public class MrController {
 		drEntity.setSpId(spId);
 		drEntity.setLinkId(item.order_id);
 		drEntity.setStatus("DELIVRD");
-			drEntity.setPhone(item.mobile);
-			drEntity.setFee(item.fee);
-			try {
-				drEntity.setRecvTime(DateUtils.parseDate(item.time, "yyyyMMddHHmmss"));
-				drEntity.setDeductFlag(0);
-				drService.create(drEntity);
-				deductBase++;
-				if(deductBase>Integer.MAX_VALUE)
-					deductBase = 50;
-				if(deductBase<50||(deductBase-50)%15!=0) {
-					processService.execute(new Runnable() { @Override public void run() {
-						toLltx(new DrPushModel(item.mobile, "", "", item.order_id,DateFormatUtils.format(drEntity.getRecvTime(), "yyyy-MM-dd HH:mm:ss"), "DELIVRD", item.fee),drEntity);
-					}});
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
+		drEntity.setPhone(item.mobile);
+		drEntity.setFee(item.fee);
+		try {
+			drEntity.setRecvTime(DateUtils.parseDate(item.time, "yyyyMMddHHmmss"));
+			drEntity.setDeductFlag(0);
+			drService.create(drEntity);
+			deductBase++;
+			if(deductBase>Integer.MAX_VALUE)
+				deductBase = 50;
+			if(deductBase<50||(deductBase-50)%15!=0) {
+				processService.execute(new Runnable() { @Override public void run() {
+					toLltx(new DrPushModel(item.mobile, "", "", item.order_id,DateFormatUtils.format(drEntity.getRecvTime(), "yyyy-MM-dd HH:mm:ss"), "DELIVRD", item.fee),drEntity);
+				}});
 			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return "ok";
 	}
 

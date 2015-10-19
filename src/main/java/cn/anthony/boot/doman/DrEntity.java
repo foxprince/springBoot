@@ -69,6 +69,7 @@ public class DrEntity {
 	 */
 	public DrEntity() {
 		super();
+		this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	}
 
 	/**
