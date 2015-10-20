@@ -11,12 +11,12 @@ import java.io.Serializable;
 public class ExtRequestInfo implements Serializable {
 
     /**
-     * CP订单�?.
+     * CP订单 ?.
      */
     private String orderId;
 
     /**
-     * 加密手机�?.
+     * 加密手机 ?.
      */
     private String mobile;
 
@@ -36,7 +36,7 @@ public class ExtRequestInfo implements Serializable {
     private String imei;
 
     /**
-     * 运营商类�?.
+     * 运营商类 ?.
      */
     private String carrierType;
 
@@ -61,7 +61,7 @@ public class ExtRequestInfo implements Serializable {
     private int factAppid;
 
     /**
-     * �?发�?�id.
+     *  ?发 ? id.
      */
     private String devId;
 

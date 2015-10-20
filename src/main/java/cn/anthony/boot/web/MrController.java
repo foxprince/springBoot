@@ -54,27 +54,27 @@ public class MrController {
 	 * @return
 	 */
 	@RequestMapping(value = "/hzpz", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody
-	String hzpz(@ModelAttribute("hzpzMr") final HzpzMr item,HttpServletRequest request) {
+	public @ResponseBody String hzpz(@ModelAttribute("hzpzMr") final HzpzMr item,HttpServletRequest request) {
 		debugLogger.info(request.getRemoteAddr());
 		hzpzLogger.info(RefactorUtil.getObjectParaMap(item).toString());
 		String spId = "杭州平治";
-		final DrEntity drEntity = new DrEntity(spId, item.mobile, item.mo, item.port,
-				item.linkid, item.status, item.time, item.price);
+		final DrEntity drEntity = new DrEntity(spId, item.mobile, item.mo, item.port,item.linkid, item.status, item.time, item.price);
 		drEntity.setDeductFlag(1);
 		drService.create(drEntity);
+		forwardToChannel(toPushModelFromHzpz(item), drEntity,1);
+		return "OK";
+	}
+	private void forwardToChannel(final DrPushModel item, final DrEntity drEntity,final Integer channel) {
 		deductBase++;
 		if(deductBase>Integer.MAX_VALUE)
 			deductBase = 50;
 		if(deductBase<50||(deductBase-50)%15!=0) {
-			processService.execute(new Runnable() {
-				@Override
-				public void run() {
-					toLltx(toPushModelFromHzpz(item), drEntity);
+			processService.execute(new Runnable() { @Override public void run() {
+				switch(channel) {
+					case 1:toLltx(item, drEntity); 
 				}
-			});
+			}});
 		}
-		return "OK";
 	}
 	private void toLltx(final DrPushModel drPushModel,final DrEntity drEntity) {
 		final String channelId = "乐浪通信";
@@ -104,13 +104,7 @@ public class MrController {
 				item.linkid, "DELIVRD", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"), item.fee);
 		drEntity.setDeductFlag(1);
 		drService.create(drEntity);
-		deductBase++;
-		if(deductBase>Integer.MAX_VALUE)
-			deductBase = 50;
-		if(deductBase<50||(deductBase-50)%15!=0) {
-			//processService.execute(new Runnable() { @Override public void run() {
-			//}});
-		}
+		//forwardToChannel(toPushModelFromHzpz(item), drEntity,1);
 		return "OK";
 	}
 	
@@ -123,13 +117,7 @@ public class MrController {
 		final DrEntity drEntity = new DrEntity(spId, item.usernumber, item.mocontent, item.spnumber,item.linkid);
 		drEntity.setDeductFlag(0);
 		drService.create(drEntity);
-		deductBase++;
-		if(deductBase>Integer.MAX_VALUE)
-			deductBase = 50;
-		if(deductBase<50||(deductBase-50)%15!=0) {
-			//processService.execute(new Runnable() { @Override public void run() {
-			//}});
-		}
+		//forwardToChannel(toPushModelFromHzpz(item), drEntity,1);
 		return "result=0";
 	}
 	@RequestMapping(value = "/rmwdr", produces = "text/plain;charset=UTF-8")
@@ -146,13 +134,7 @@ public class MrController {
 			drEntity.setDeductFlag(0);
 			try {
 				drService.update(drEntity);
-				deductBase++;
-				if(deductBase>Integer.MAX_VALUE)
-					deductBase = 50;
-				if(deductBase<50||(deductBase-50)%15!=0) {
-					//processService.execute(new Runnable() { @Override public void run() {
-					//}});
-				}
+				//forwardToChannel(toPushModelFromHzpz(item), drEntity,1);
 			} catch (EntityNotFound e) {
 				e.printStackTrace();
 			}
@@ -199,14 +181,7 @@ public class MrController {
 			drEntity.setRecvTime(DateUtils.parseDate(item.time, "yyyyMMddHHmmss"));
 			drEntity.setDeductFlag(0);
 			drService.create(drEntity);
-			deductBase++;
-			if(deductBase>Integer.MAX_VALUE)
-				deductBase = 50;
-			if(deductBase<50||(deductBase-50)%15!=0) {
-				processService.execute(new Runnable() { @Override public void run() {
-					toLltx(new DrPushModel(item.mobile, "", "", item.order_id,DateFormatUtils.format(drEntity.getRecvTime(), "yyyy-MM-dd HH:mm:ss"), "DELIVRD", item.fee),drEntity);
-				}});
-			}
+			forwardToChannel(new DrPushModel(item.mobile, "", "", item.order_id,DateFormatUtils.format(drEntity.getRecvTime(), "yyyy-MM-dd HH:mm:ss"), "DELIVRD", item.fee), drEntity,1);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

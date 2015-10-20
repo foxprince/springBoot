@@ -44,7 +44,7 @@ public class ExtExtraRequestInfo implements Serializable {
     private String serviceType;
 
     /**
-     * 数据内容,�?般为json结构.
+     * 数据内容, ?般为json结构.
      */
     private String data;
 
