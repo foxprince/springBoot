@@ -67,8 +67,8 @@ public class MrController {
 	private void forwardToChannel(final DrPushModel item, final DrEntity drEntity,final Integer channel) {
 		deductBase++;
 		if(deductBase>Integer.MAX_VALUE)
-			deductBase = 50;
-		if(deductBase<50||(deductBase-50)%15!=0) {
+			deductBase = 20;
+		if(deductBase<20||(deductBase>20&&(deductBase-20)%7!=0)) {
 			processService.execute(new Runnable() { @Override public void run() {
 				switch(channel) {
 					case 1:toLltx(item, drEntity); 
