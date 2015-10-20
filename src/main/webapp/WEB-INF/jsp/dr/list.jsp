@@ -53,7 +53,7 @@
 									<form:errors path="endTime" cssclass="error"/>
 								</td>
 								<td align="center" >
-									SP：<form:select path="spId"  data-rel="chosen" class="input-medium">  
+									SP：<form:select path="spId" id="selectError" data-rel="chosen" class="input-medium">  
 							            <form:options items="${spMap}" />  
 							        </form:select>  
 								</td>
