@@ -54,6 +54,7 @@
 								</td>
 								<td align="center" >
 									SP：<form:select path="spId" id="selectError" data-rel="chosen" class="input-medium">  
+							            <option value="0">请选择</option>
 							            <form:options items="${spMap}" />  
 							        </form:select>  
 								</td>
