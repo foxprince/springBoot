@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import cn.anthony.boot.doman.DrEntity;
@@ -25,7 +26,7 @@ import cn.anthony.util.StringTools;
 
 @Controller
 @RequestMapping(value="/dr")
-//@SessionAttributes(value="pageRequest")
+@SessionAttributes(value="pageRequest")
 public class DrController {
 	@Autowired
 	DrPushService pushService;
@@ -43,14 +44,14 @@ public class DrController {
 		this.request = request;
 		this.response = response;
 		this.session = request.getSession();
+		this.session.setAttribute("pageRequest",new DrSearch());
 		m.addAttribute("spMap", drService.getSpMap());
 		m.addAttribute("channelMap",drService.getChannelMap());
 	}
 	
 	@RequestMapping(value={"/","index"})
-	public String initPage(DrSearch pageRequest,BindingResult result,Model m,SessionStatus status) {
+	public String initPage(@ModelAttribute("pageRequest") DrSearch pageRequest,BindingResult result,Model m,SessionStatus status) {
 		status.setComplete();
-		session.removeAttribute("pageRequest");
 		return listPage(new DrSearch(), result, m, status);
 	}
 	
@@ -62,7 +63,6 @@ public class DrController {
         }
 		Page<DrEntity> drPage = drService.find(drSearch.spId,drSearch.channelId,drSearch.phoneStr,drSearch.beginTime,drSearch.endTime,drSearch.page,drSearch.size);
 		session.setAttribute("pageRequest", drSearch);
-		m.addAttribute("pageRequest", drSearch);
 		ControllerUtil.setPageVariables(m, drPage);
 		return "/dr/list";
 	}
