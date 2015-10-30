@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "code_config")
 public class CodeConfig {
@@ -16,17 +18,17 @@ public class CodeConfig {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "sp_id", nullable = false, length = 20)
+	@NotEmpty(message="sp名称不能空") @Column(name = "sp_id", nullable = false, length = 20)
 	private String spId;
 	
-	@Column(name = "code", nullable = false, length = 50)
+	@NotEmpty @Column(name = "code", nullable = false, length = 50)
 	private String code;
 	
-	@Column(name = "sp_no", nullable = false, length = 21)
+	@NotEmpty @Column(name = "sp_no", nullable = false, length = 21)
 	private String spNo;
 	
 	//匹配类型 ，0：双模糊，1：代码精确，2：指令精确，3：双精确
-	@Column(name = "match_type", nullable = false, length = 1)
+	@NotEmpty @Column(name = "match_type", nullable = false, length = 1)
 	private String matchType;
 	
 	@Column(name = "fee", nullable = true)

@@ -7,5 +7,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface DaoRepository<T, K extends Serializable> extends JpaRepository<T, K>{
-  //,QueryDslPredicateExecutor<T> {
+
+	
 }

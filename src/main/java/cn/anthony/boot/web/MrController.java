@@ -43,8 +43,24 @@ public class MrController {
 
 	private static int deductBase = 0;
 
-	private final ExecutorService processService = Executors.newCachedThreadPool();
+	private static final ExecutorService processService = Executors.newCachedThreadPool();
 	
+	public static void main(String[] args) {
+		int i = 1;
+		while (deductBase < 100) {
+			deductBase++;final int j = i++;
+			if(deductBase>Integer.MAX_VALUE)
+				deductBase = 20;
+			//System.out.print(j+"\t");
+			if(deductBase<20||(deductBase>20&&(deductBase-20)%7!=0)) {
+				System.out.println(j+"\t"+deductBase);
+				processService.execute(new Runnable() { @Override public void run() {
+				}});
+			}
+			else
+				System.out.println();
+		}
+	}
 	
 	/**
 	 * 发送 by8#a1101（模糊） 到 10655562 

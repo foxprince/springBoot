@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class DrPageRequest extends PageRequest {
+public class DrSearch extends PageRequest{
 	String spId;
 	String channelId;
 	String phoneStr;
@@ -12,6 +12,14 @@ public class DrPageRequest extends PageRequest {
 	Date beginTime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	Date endTime;
+//	PageRequest pageRequest  = new PageRequest();
+//	
+//	public PageRequest getPageRequest() {
+//		return pageRequest;
+//	}
+//	public void setPageRequest(PageRequest pageRequest) {
+//		this.pageRequest = pageRequest;
+//	}
 	public String getSpId() {
 		return spId;
 	}

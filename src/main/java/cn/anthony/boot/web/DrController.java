@@ -15,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import cn.anthony.boot.doman.DrEntity;
@@ -26,7 +25,7 @@ import cn.anthony.util.StringTools;
 
 @Controller
 @RequestMapping(value="/dr")
-@SessionAttributes(value="drPageRequest")
+//@SessionAttributes(value="pageRequest")
 public class DrController {
 	@Autowired
 	DrPushService pushService;
@@ -49,24 +48,26 @@ public class DrController {
 	}
 	
 	@RequestMapping(value={"/","index"})
-	public String initPage(DrPageRequest pageRequest,BindingResult result,Model m,SessionStatus status) {
+	public String initPage(DrSearch pageRequest,BindingResult result,Model m,SessionStatus status) {
 		status.setComplete();
-		session.removeAttribute("drPageRequest");
-		return listPage(new DrPageRequest(), result, m, status);
+		session.removeAttribute("pageRequest");
+		return listPage(new DrSearch(), result, m, status);
 	}
 	
 	@RequestMapping(value={"/list"})
-	public String listPage(@Valid DrPageRequest pageRequest,BindingResult result,Model m,SessionStatus status) {
-		validate(pageRequest,result);
+	public String listPage(@ModelAttribute("pageRequest") @Valid DrSearch drSearch,BindingResult result,Model m,SessionStatus status) {
+		validate(drSearch,result);
 		if(result.hasErrors()) {
             return "/dr/list";
         }
-		Page<DrEntity> drPage = drService.find(pageRequest.spId,pageRequest.channelId,pageRequest.phoneStr,pageRequest.beginTime,pageRequest.endTime,pageRequest.page,pageRequest.size);
+		Page<DrEntity> drPage = drService.find(drSearch.spId,drSearch.channelId,drSearch.phoneStr,drSearch.beginTime,drSearch.endTime,drSearch.page,drSearch.size);
+		session.setAttribute("pageRequest", drSearch);
+		m.addAttribute("pageRequest", drSearch);
 		ControllerUtil.setPageVariables(m, drPage);
 		return "/dr/list";
 	}
 	
-	public void validate(DrPageRequest request, Errors errors) {
+	public void validate(DrSearch request, Errors errors) {
 		if(!StringUtils.isEmpty(request.getPhoneStr()))
 			for(String phone :StringTools.splitString(request.getPhoneStr(), " \n\t,")) 
 				if(!StringTools.isValidPhone(phone)) {
