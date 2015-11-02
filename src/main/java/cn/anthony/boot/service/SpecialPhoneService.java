@@ -1,11 +1,13 @@
 package cn.anthony.boot.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,7 @@ public class SpecialPhoneService {
     private SpecialPhoneRepository repository;
  
     public SpecialPhone create(SpecialPhone drEntity) {
-        SpecialPhone createdSpecialPhone = drEntity;
-        return repository.save(createdSpecialPhone);
+        return repository.save(drEntity);
     }
      
     public SpecialPhone findById(long id) {
@@ -38,7 +39,9 @@ public class SpecialPhoneService {
     	return null;
     }
  
-    public Page<SpecialPhone> findAll(int page,int size) {
+    public Page<SpecialPhone> findAll(String phone, int page,int size) {
+    	if(phone!=null)
+    		return new PageImpl<SpecialPhone>(repository.findByPhone(phone));
     	return repository.findAll(new PageRequest(page - 1, size, Sort.Direction.DESC, "id"));
     }
     
@@ -52,4 +55,20 @@ public class SpecialPhoneService {
         repository.saveAndFlush(item);
         return updatedSpecialPhone;
     }
+
+	public int batchAdd(String stype, Set<String> phoneSet) {
+		int total = 0;
+		for(String phone : phoneSet)
+			if(create(new SpecialPhone(stype,phone))!=null)
+				total ++;
+		return total;
+	}
+
+	public SpecialPhone delete(Long id) throws EntityNotFound {
+		SpecialPhone deletedBaseEntity = repository.findOne(id);
+        if (deletedBaseEntity == null)
+            throw new EntityNotFound(SpecialPhone.class.getName());
+        repository.delete(deletedBaseEntity);
+        return deletedBaseEntity;
+	}
 }

@@ -1,7 +1,8 @@
 package cn.anthony.boot.web;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -12,74 +13,70 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.anthony.boot.doman.SpecialPhone;
+import cn.anthony.boot.exception.EntityNotFound;
 import cn.anthony.boot.service.SpecialPhoneService;
 import cn.anthony.boot.util.ControllerUtil;
+import cn.anthony.util.FileTools;
+import cn.anthony.util.PhoneTools;
 
 @Controller
 @RequestMapping(value = "/phone")
 public class PhoneController {
-	@Resource
-	SpecialPhoneService service;
-	
-	@RequestMapping(value={"/list"})
-	public String listPage(@Valid PageRequest pageRequest,BindingResult result,Model m,SessionStatus status) {
-		if(result.hasErrors()) 
-            return "/dr/phoneList";
-        Page<SpecialPhone> drPage = service.findAll(pageRequest.page,pageRequest.size);
-		ControllerUtil.setPageVariables(m, drPage);
-		return "/dr/phoneList";
-	}
-	
-	@RequestMapping(value = "/addSpecialPhone", method = RequestMethod.GET)
-	public String showFormCustomTag(Model model) {
-		model.addAttribute("codeConfig", new SpecialPhone());
-		return "dr/codeForm";
-	}
+    private String PHONE_FILE_DIR = System.getProperty("user.home") + "/data/phone/";
+    @Resource
+    SpecialPhoneService service;
 
-	@RequestMapping(value = "/codeConfig.json", method = RequestMethod.POST)
-	public @ResponseBody
-	ValidationResponse processFormAjaxJson(@ModelAttribute(value = "codeConfig") @Valid SpecialPhone cconfig, BindingResult result) {
-		//自定义验证
-		validate(cconfig, result);
-		ValidationResponse res = new ValidationResponse();
-		if (!result.hasErrors()) {
-			res.setStatus("SUCCESS");
-			service.create(cconfig);
-		} else {
-			res.setStatus("FAIL");
-			List<FieldError> allErrors = result.getFieldErrors();
-			List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
-			for (FieldError objectError : allErrors) {
-				errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getDefaultMessage()));
-			}
-			res.setErrorMessageList(errorMesages);
-		}
-		return res;
+    @RequestMapping(value = { "/addPhone" })
+    public String processUpload(@RequestParam String stype, @RequestParam String phoneStr, @RequestBody MultipartFile file, final RedirectAttributes redirectAttributes,Model model) {
+	String filePath = PHONE_FILE_DIR + file.getOriginalFilename();
+	File dest = new File(filePath);
+	try {
+	    file.transferTo(dest);
+	} catch (IllegalStateException e) {
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    e.printStackTrace();
 	}
-	
-	@RequestMapping(value="/codeConfig.htm",method=RequestMethod.POST)
-	public String processFormAjax(@ModelAttribute(value = "codeConfig") @Valid SpecialPhone cconfig, BindingResult result){
-		if(result.hasErrors()) {
-			return "dr/codeForm";
-		} 
-		else {
-			return "dr/codeList";
-		}
-	}
+	Set<String> phoneSet = PhoneTools.getPhonesFromString(phoneStr);
+	phoneSet.addAll(FileTools.quickReadFile(filePath));
+	redirectAttributes.addFlashAttribute("message", "成功导入记录数 :" + service.batchAdd(stype, phoneSet));
+	return "redirect:list";
+    }
 
-	public void validate(SpecialPhone cconfig, Errors errors) {
-		if (StringUtils.isEmpty(cconfig.getPhone())) {
-			errors.rejectValue("spId", "spId.null", "spId非法");
-			return;
-		}
+    @RequestMapping(value = { "/list" })
+    public String listPage(@ModelAttribute("pageRequest") @Valid PhoneSearch pageRequest, BindingResult result, Model m) {
+	if (result.hasErrors())
+	    return "/dr/phoneList";
+	Page<SpecialPhone> drPage = service.findAll(pageRequest.phone, pageRequest.page, pageRequest.size);
+	ControllerUtil.setPageVariables(m, drPage);
+	return "/dr/phoneList";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public ModelAndView deleteBaseEntity(@PathVariable Long id, final RedirectAttributes redirectAttributes) throws EntityNotFound {
+	ModelAndView mav = new ModelAndView("redirect:/phone/list");
+	SpecialPhone baseEntity = service.delete(id);
+	String message = "手机号码： " + baseEntity.getPhone() + " 成功删除";
+	redirectAttributes.addFlashAttribute("message", message);
+	return mav;
+    }
+
+    public void validate(SpecialPhone cconfig, Errors errors) {
+	if (StringUtils.isEmpty(cconfig.getPhone())) {
+	    errors.rejectValue("spId", "spId.null", "spId非法");
+	    return;
 	}
+    }
 
 }

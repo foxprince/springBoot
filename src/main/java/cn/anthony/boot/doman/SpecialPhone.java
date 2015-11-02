@@ -19,23 +19,40 @@ public class SpecialPhone {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@NotEmpty(message = "类型不能空")
-	@Column(name = "sp_id", nullable = false, length = 20)
+	@Column(nullable = false, length = 20)
 	private String stype;
 	@Column(nullable = true)
 	private String phone;
 	@Column
 	private String clevel;
-	@Column(name = "relate_id")
+	@Column
 	private String relateId;
-	@Column(name = "relate_object")
+	@Column
 	private String relateObject;
 	@Column
 	private Integer adminId;
 	@Column
 	private Timestamp ctime;
 
+	transient private String stypeDesc;
 	public SpecialPhone() {
 		this.ctime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	}
+	
+	public SpecialPhone(String stype, String phone) {
+		super();
+		this.stype = stype;
+		this.phone = phone;
+		this.ctime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	}
+	
+	public String getStypeDesc() {
+		if(stype.equalsIgnoreCase("B"))
+			return "黑名单";
+		else if(stype.equalsIgnoreCase("W"))
+			return "白名单";
+		else
+			return stype;
 	}
 	public Long getId() {
 		return id;

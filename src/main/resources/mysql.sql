@@ -25,11 +25,11 @@ grant all on ssw.* to 'sswuser'@'%' identified by 'pwd4ssw';
 
 /*通道禁发黑名单*/
 CREATE TABLE special_phone (
- id  integer(11)   primary key not null,
+ id  integer(11)   primary key not null AUTO_INCREMENT,
  stype  char(1)  null,/*W:白名单，B：黑名单*/
  clevel char(1)  null,/*黑名单级别,O：全局，C：渠道,S:EC/SI*/
- relate_id varchar(11) null,/*关联id*/
  phone  varchar(11)  not null,
+ relate_id varchar(11) null,/*关联id*/
  relate_object  varchar(50)  null,
  admin_id integer(11)  null,/*操作员*/
  ctime timestamp not null
@@ -38,7 +38,7 @@ CREATE INDEX idx_special_phone ON special_phone(phone);
 
 /*手机号段表*/
 CREATE TABLE phone_head(
- id  integer(11)   primary key not null,
+ id  integer(11)   primary key not null AUTO_INCREMENT,
  province VARCHAR(6)   NOT NULL,
  city   VARCHAR(10)   NOT NULL,
  postcode VARCHAR(3)   NOT NULL,
