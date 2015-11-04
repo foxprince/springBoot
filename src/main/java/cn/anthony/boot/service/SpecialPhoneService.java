@@ -13,62 +13,61 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.boot.doman.SpecialPhone;
-import cn.anthony.boot.doman.SpecialPhoneRepository;
 import cn.anthony.boot.exception.EntityNotFound;
+import cn.anthony.boot.repository.SpecialPhoneRepository;
 
 @Service
 @Transactional
 public class SpecialPhoneService {
-	@Resource
+    @Resource
     private SpecialPhoneRepository repository;
- 
+
+    public SpecialPhoneService() {
+    }
+
     public SpecialPhone create(SpecialPhone drEntity) {
-        return repository.save(drEntity);
+	return repository.save(drEntity);
     }
-     
+
     public SpecialPhone findById(long id) {
-        return repository.findOne(id);
+	return repository.findOne(id);
     }
+
     public boolean isSpecial(String phone) {
-    	return findByPhone(phone)!=null?true:false;
+	return findByPhone(phone) != null ? true : false;
     }
+
     public SpecialPhone findByPhone(String phone) {
-        List<SpecialPhone> l = repository.findByPhone(phone);
-        if(l!=null&&l.size()>0)
-        	return l.get(0);
-    	return null;
+	List<SpecialPhone> l = repository.findByPhone(phone);
+	if (l != null && l.size() > 0)
+	    return l.get(0);
+	return null;
     }
- 
-    public Page<SpecialPhone> findAll(String phone, int page,int size) {
-    	if(phone!=null)
-    		return new PageImpl<SpecialPhone>(repository.findByPhone(phone));
-    	return repository.findAll(new PageRequest(page - 1, size, Sort.Direction.DESC, "id"));
+
+    public Page<SpecialPhone> findAll(String phone, int page, int size) {
+	if (phone != null)
+	    return new PageImpl<SpecialPhone>(repository.findByPhone(phone));
+	return repository.findAll(new PageRequest(page - 1, size, Sort.Direction.DESC, "id"));
     }
-    
-    @Transactional(rollbackOn=EntityNotFound.class)
+
+    @Transactional(rollbackOn = EntityNotFound.class)
     public SpecialPhone update(SpecialPhone item) throws EntityNotFound {
-        SpecialPhone updatedSpecialPhone = repository.findOne(item.getId());
-        if (updatedSpecialPhone == null)
-            throw new EntityNotFound(SpecialPhone.class.getName());
-        item.setId(updatedSpecialPhone.getId());
-        repository.delete(updatedSpecialPhone);
-        repository.saveAndFlush(item);
-        return updatedSpecialPhone;
+	return repository.saveAndFlush(item);
     }
 
-	public int batchAdd(String stype, Set<String> phoneSet) {
-		int total = 0;
-		for(String phone : phoneSet)
-			if(create(new SpecialPhone(stype,phone))!=null)
-				total ++;
-		return total;
-	}
+    public int batchAdd(String stype, Set<String> phoneSet) {
+	int total = 0;
+	for (String phone : phoneSet)
+	    if (create(new SpecialPhone(stype, phone)) != null)
+		total++;
+	return total;
+    }
 
-	public SpecialPhone delete(Long id) throws EntityNotFound {
-		SpecialPhone deletedBaseEntity = repository.findOne(id);
-        if (deletedBaseEntity == null)
-            throw new EntityNotFound(SpecialPhone.class.getName());
-        repository.delete(deletedBaseEntity);
-        return deletedBaseEntity;
-	}
+    public SpecialPhone delete(Long id) throws EntityNotFound {
+	SpecialPhone deletedBaseEntity = repository.findOne(id);
+	if (deletedBaseEntity == null)
+	    throw new EntityNotFound(SpecialPhone.class.getName());
+	repository.delete(deletedBaseEntity);
+	return deletedBaseEntity;
+    }
 }

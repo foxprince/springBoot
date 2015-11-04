@@ -1,7 +1,10 @@
 package com.bestv.sdk.utils;
 
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Logger;
 
@@ -23,64 +26,60 @@ public final class StringUtils {
 
     }
 
-
     public static boolean isEmpty(final String str) {
-        if (str == null || "".equals(str)) {
-            return true;
-        }
-        return false;
+	if (str == null || "".equals(str)) {
+	    return true;
+	}
+	return false;
     }
 
     public static String urlEncodeWithUtf8(String encodeStr) {
-        if (isEmpty(encodeStr)) {
-            return null;
-        }
-        try {
-            encodeStr = URLEncoder.encode(encodeStr, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.info("urlEncode str error");
-        }
+	if (isEmpty(encodeStr)) {
+	    return null;
+	}
+	try {
+	    encodeStr = URLEncoder.encode(encodeStr, "utf-8");
+	} catch (UnsupportedEncodingException e) {
+	    LOGGER.info("urlEncode str error");
+	}
 
-        return encodeStr;
+	return encodeStr;
     }
-
 
     public static boolean isEmptyOrNull(final String str) {
-        if (str == null || "".equals(str) || NULL_STR.equals(str)) {
-            return true;
-        }
-        return false;
+	if (str == null || "".equals(str) || NULL_STR.equals(str)) {
+	    return true;
+	}
+	return false;
     }
 
-
     public static String getStringFromBytes(final byte[] bytes, final String charset) {
-        try {
-            return new String(bytes, charset);
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.info("Get string from bytes error!");
-        }
-        return null;
+	try {
+	    return new String(bytes, charset);
+	} catch (UnsupportedEncodingException e) {
+	    LOGGER.info("Get string from bytes error!");
+	}
+	return null;
     }
 
     public static byte[] getBytes(final String str, final String charset) {
-        if (str == null) {
-            return null;
-        }
-        try {
-            return str.getBytes(charset);
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.info("getBytes error");
-        }
-        return null;
+	if (str == null) {
+	    return null;
+	}
+	try {
+	    return str.getBytes(charset);
+	} catch (UnsupportedEncodingException e) {
+	    LOGGER.info("getBytes error");
+	}
+	return null;
     }
 
-
     public static byte[] getBytes(final String str) {
-        return getBytes(str, DEFAULT_CHARSET);
+	return getBytes(str, DEFAULT_CHARSET);
     }
 
     public static String getStringFromBytes(final byte[] bytes) {
-        return getStringFromBytes(bytes, DEFAULT_CHARSET);
+	return getStringFromBytes(bytes, DEFAULT_CHARSET);
     }
 
     /**
@@ -90,32 +89,30 @@ public final class StringUtils {
      * @return
      */
     public static String kill2StrNull(final String mayBeNullStr) {
-        if (mayBeNullStr == null || NULL_STR.equals(mayBeNullStr)) {
-            return "";
-        }
-        return mayBeNullStr;
+	if (mayBeNullStr == null || NULL_STR.equals(mayBeNullStr)) {
+	    return "";
+	}
+	return mayBeNullStr;
     }
 
     public static String getStrFromInputStream(final InputStream inputStream) {
-        if (null == inputStream) {
-            return null;
-        }
-        String content = null;
-        try {
-            final StringBuilder lineBuff = new StringBuilder();
-            final BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    inputStream, DEFAULT_CHARSET));
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                lineBuff.append(line);
-            }
-            content = lineBuff.toString();
-            reader.close();
-        } catch (IOException e) {
-            LOGGER.info("Get InputStream error!");
-        }
-        return content;
+	if (null == inputStream) {
+	    return null;
+	}
+	String content = null;
+	try {
+	    final StringBuilder lineBuff = new StringBuilder();
+	    final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, DEFAULT_CHARSET));
+	    String line = null;
+	    while ((line = reader.readLine()) != null) {
+		lineBuff.append(line);
+	    }
+	    content = lineBuff.toString();
+	    reader.close();
+	} catch (IOException e) {
+	    LOGGER.info("Get InputStream error!");
+	}
+	return content;
     }
-
 
 }

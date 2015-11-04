@@ -14,94 +14,98 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "code_config")
 public class CodeConfig {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@NotEmpty(message="sp名称不能空") @Column(name = "sp_id", nullable = false, length = 20)
-	private String spId;
-	
-	@NotEmpty @Column(name = "code", nullable = false, length = 50)
-	private String code;
-	
-	@NotEmpty @Column(name = "sp_no", nullable = false, length = 21)
-	private String spNo;
-	
-	//匹配类型 ，0：双模糊，1：代码精确，2：指令精确，3：双精确
-	@NotEmpty @Column(name = "match_type", nullable = false, length = 1)
-	private String matchType;
-	
-	@Column(name = "fee", nullable = true)
-	private Integer fee;
-	
-	@Column(name = "channel_id", nullable = true, length = 20)
-	private String channelId;
-	
-	//本条记录入库时间
-	@Column(name = "creation_time", nullable = false)
-	private Timestamp creationTime;
+    @NotEmpty(message = "sp名称不能空")
+    @Column(name = "sp_id", nullable = false, length = 20)
+    private String spId;
 
-	public Long getId() {
-		return id;
-	}
+    @NotEmpty
+    @Column(name = "code", nullable = false, length = 50)
+    private String code;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @NotEmpty
+    @Column(name = "sp_no", nullable = false, length = 21)
+    private String spNo;
 
-	public String getSpId() {
-		return spId;
-	}
+    // 匹配类型 ，0：双模糊，1：代码精确，2：指令精确，3：双精确
+    @NotEmpty
+    @Column(name = "match_type", nullable = false, length = 1)
+    private String matchType;
 
-	public void setSpId(String spId) {
-		this.spId = spId;
-	}
+    @Column(name = "fee", nullable = true)
+    private Integer fee;
 
-	public String getCode() {
-		return code;
-	}
+    @Column(name = "channel_id", nullable = true, length = 20)
+    private String channelId;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    // 本条记录入库时间
+    @Column(name = "creation_time", nullable = false)
+    private Timestamp creationTime;
 
-	public String getSpNo() {
-		return spNo;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setSpNo(String spNo) {
-		this.spNo = spNo;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getMatchType() {
-		return matchType;
-	}
+    public String getSpId() {
+	return spId;
+    }
 
-	public void setMatchType(String matchType) {
-		this.matchType = matchType;
-	}
+    public void setSpId(String spId) {
+	this.spId = spId;
+    }
 
-	public Integer getFee() {
-		return fee;
-	}
+    public String getCode() {
+	return code;
+    }
 
-	public void setFee(Integer fee) {
-		this.fee = fee;
-	}
+    public void setCode(String code) {
+	this.code = code;
+    }
 
-	public Timestamp getCreationTime() {
-		return creationTime;
-	}
+    public String getSpNo() {
+	return spNo;
+    }
 
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
-	}
+    public void setSpNo(String spNo) {
+	this.spNo = spNo;
+    }
 
-	public String getChannelId() {
-		return channelId;
-	}
+    public String getMatchType() {
+	return matchType;
+    }
 
-	public void setChannelId(String channelId) {
-		this.channelId = channelId;
-	}
+    public void setMatchType(String matchType) {
+	this.matchType = matchType;
+    }
+
+    public Integer getFee() {
+	return fee;
+    }
+
+    public void setFee(Integer fee) {
+	this.fee = fee;
+    }
+
+    public Timestamp getCreationTime() {
+	return creationTime;
+    }
+
+    public void setCreationTime(Timestamp creationTime) {
+	this.creationTime = creationTime;
+    }
+
+    public String getChannelId() {
+	return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+	this.channelId = channelId;
+    }
 }

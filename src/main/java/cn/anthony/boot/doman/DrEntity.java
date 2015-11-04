@@ -14,218 +14,216 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "dr_entity")
 public class DrEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@Column(name = "sp_id", nullable = false, length = 20)
-	private String spId;
-	
-	@Column(name = "phone", nullable = true, length = 11)
-	private String phone;
-	
-	@Column(name = "msg", nullable = true, length = 50)
-	private String msg;
-	
-	@Column(name = "sp_no", nullable = true, length = 21)
-	private String spNo;
-	
-	@Column(name = "link_id", nullable = false, length = 16)
-	private String linkId;
-	//状态报告
-	@Column(name = "status", nullable = true, length = 10)
-	private String status;
-	//产生状态报告的时间
-	@Column(name = "dr_time", nullable = true, length = 30)
-	private String drTime;
-	
-	@Column(name = "fee", nullable = true)
-	private Integer fee;
-	
-	@Column(name = "channel_id", nullable = true, length = 20)
-	private String channelId;
-	
-	//收到状态报告的时间
-	@Column(name = "recv_time", nullable = false)
-	private Date recvTime;
-	
-	//转发状态报告的时间
-	@Column(name = "forward_time", nullable = true)
-	private Date forwardTime;
-	
-	//转发状态,0:成功
-	@Column(name = "forward_status", nullable = true, length = 3)
-	private Integer forwardStatus;
-	
-	//本条记录入库时间
-	@Column(name = "creation_time", nullable = false)
-	private Timestamp creationTime;
+    @Column(name = "sp_id", nullable = false, length = 20)
+    private String spId;
 
-	//扣量标志 1:表示扣除
-	@Column(name = "deduct_flag",nullable = true,length = 1)
-	private Integer deductFlag;
-	/**
-	 * 
-	 */
-	public DrEntity() {
-		super();
-		this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	}
+    @Column(name = "phone", nullable = true, length = 11)
+    private String phone;
 
-	/**
-	 * @param spId
-	 * @param phone
-	 * @param msg
-	 * @param spNo
-	 * @param linkId
-	 * @param creationTime
-	 */
-	public DrEntity(String spId, String phone, String msg, String spNo,
-			String linkId) {
-		super();
-		this.spId = spId;
-		this.phone = phone;
-		this.msg = msg;
-		this.spNo = spNo;
-		this.linkId = linkId;
-		this.recvTime = Calendar.getInstance().getTime();
-		this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	}
+    @Column(name = "msg", nullable = true, length = 50)
+    private String msg;
 
-	public DrEntity(String spId, String phone, String msg, String spNo,
-			String linkId, String status, String drTime, Integer fee) {
-		super();
-		this.spId = spId;
-		this.phone = phone;
-		this.msg = msg;
-		this.spNo = spNo;
-		this.linkId = linkId;
-		this.status = status;
-		this.drTime = drTime;
-		this.fee = fee;
-		this.recvTime = Calendar.getInstance().getTime();
-		this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	}
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "sp_no", nullable = true, length = 21)
+    private String spNo;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(name = "link_id", nullable = false, length = 16)
+    private String linkId;
+    // 状态报告
+    @Column(name = "status", nullable = true, length = 10)
+    private String status;
+    // 产生状态报告的时间
+    @Column(name = "dr_time", nullable = true, length = 30)
+    private String drTime;
 
-	public String getSpId() {
-		return spId;
-	}
+    @Column(name = "fee", nullable = true)
+    private Integer fee;
 
-	public void setSpId(String spId) {
-		this.spId = spId;
-	}
+    @Column(name = "channel_id", nullable = true, length = 20)
+    private String channelId;
 
-	public String getPhone() {
-		return phone;
-	}
+    // 收到状态报告的时间
+    @Column(name = "recv_time", nullable = false)
+    private Date recvTime;
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    // 转发状态报告的时间
+    @Column(name = "forward_time", nullable = true)
+    private Date forwardTime;
 
-	public String getMsg() {
-		return msg;
-	}
+    // 转发状态,0:成功
+    @Column(name = "forward_status", nullable = true, length = 3)
+    private Integer forwardStatus;
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    // 本条记录入库时间
+    @Column(name = "creation_time", nullable = false)
+    private Timestamp creationTime;
 
-	public String getSpNo() {
-		return spNo;
-	}
+    // 扣量标志 1:表示扣除
+    @Column(name = "deduct_flag", nullable = true, length = 1)
+    private Integer deductFlag;
 
-	public void setSpNo(String spNo) {
-		this.spNo = spNo;
-	}
+    /**
+     * 
+     */
+    public DrEntity() {
+	super();
+	this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+    }
 
-	public String getLinkId() {
-		return linkId;
-	}
+    /**
+     * @param spId
+     * @param phone
+     * @param msg
+     * @param spNo
+     * @param linkId
+     * @param creationTime
+     */
+    public DrEntity(String spId, String phone, String msg, String spNo, String linkId) {
+	super();
+	this.spId = spId;
+	this.phone = phone;
+	this.msg = msg;
+	this.spNo = spNo;
+	this.linkId = linkId;
+	this.recvTime = Calendar.getInstance().getTime();
+	this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+    }
 
-	public void setLinkId(String linkId) {
-		this.linkId = linkId;
-	}
+    public DrEntity(String spId, String phone, String msg, String spNo, String linkId, String status, String drTime, Integer fee) {
+	super();
+	this.spId = spId;
+	this.phone = phone;
+	this.msg = msg;
+	this.spNo = spNo;
+	this.linkId = linkId;
+	this.status = status;
+	this.drTime = drTime;
+	this.fee = fee;
+	this.recvTime = Calendar.getInstance().getTime();
+	this.creationTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getDrTime() {
-		return drTime;
-	}
+    public String getSpId() {
+	return spId;
+    }
 
-	public void setDrTime(String drTime) {
-		this.drTime = drTime;
-	}
+    public void setSpId(String spId) {
+	this.spId = spId;
+    }
 
-	public Integer getFee() {
-		return fee;
-	}
+    public String getPhone() {
+	return phone;
+    }
 
-	public void setFee(Integer fee) {
-		this.fee = fee;
-	}
+    public void setPhone(String phone) {
+	this.phone = phone;
+    }
 
-	public String getChannelId() {
-		return channelId;
-	}
+    public String getMsg() {
+	return msg;
+    }
 
-	public void setChannelId(String channelId) {
-		this.channelId = channelId;
-	}
+    public void setMsg(String msg) {
+	this.msg = msg;
+    }
 
-	public Date getRecvTime() {
-		return recvTime;
-	}
+    public String getSpNo() {
+	return spNo;
+    }
 
-	public void setRecvTime(Date recvTime) {
-		this.recvTime = recvTime;
-	}
+    public void setSpNo(String spNo) {
+	this.spNo = spNo;
+    }
 
-	public Date getForwardTime() {
-		return forwardTime;
-	}
+    public String getLinkId() {
+	return linkId;
+    }
 
-	public void setForwardTime(Date forwardTime) {
-		this.forwardTime = forwardTime;
-	}
+    public void setLinkId(String linkId) {
+	this.linkId = linkId;
+    }
 
-	public Integer getForwardStatus() {
-		return forwardStatus;
-	}
+    public String getStatus() {
+	return status;
+    }
 
-	public Integer getDeductFlag() {
-		return deductFlag;
-	}
+    public void setStatus(String status) {
+	this.status = status;
+    }
 
-	public void setDeductFlag(Integer deduct_flag) {
-		this.deductFlag = deduct_flag;
-	}
+    public String getDrTime() {
+	return drTime;
+    }
 
-	public void setForwardStatus(Integer forwardStatus) {
-		this.forwardStatus = forwardStatus;
-	}
+    public void setDrTime(String drTime) {
+	this.drTime = drTime;
+    }
 
-	public Timestamp getCreationTime() {
-		return creationTime;
-	}
+    public Integer getFee() {
+	return fee;
+    }
 
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
-	}
+    public void setFee(Integer fee) {
+	this.fee = fee;
+    }
 
-	
-	
+    public String getChannelId() {
+	return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+	this.channelId = channelId;
+    }
+
+    public Date getRecvTime() {
+	return recvTime;
+    }
+
+    public void setRecvTime(Date recvTime) {
+	this.recvTime = recvTime;
+    }
+
+    public Date getForwardTime() {
+	return forwardTime;
+    }
+
+    public void setForwardTime(Date forwardTime) {
+	this.forwardTime = forwardTime;
+    }
+
+    public Integer getForwardStatus() {
+	return forwardStatus;
+    }
+
+    public Integer getDeductFlag() {
+	return deductFlag;
+    }
+
+    public void setDeductFlag(Integer deduct_flag) {
+	this.deductFlag = deduct_flag;
+    }
+
+    public void setForwardStatus(Integer forwardStatus) {
+	this.forwardStatus = forwardStatus;
+    }
+
+    public Timestamp getCreationTime() {
+	return creationTime;
+    }
+
+    public void setCreationTime(Timestamp creationTime) {
+	this.creationTime = creationTime;
+    }
+
 }

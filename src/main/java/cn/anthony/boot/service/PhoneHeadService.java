@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.anthony.boot.doman.PhoneHead;
-import cn.anthony.boot.doman.PhoneHeadRepository;
+import cn.anthony.boot.repository.PhoneHeadRepository;
 
 @Service
 public class PhoneHeadService {

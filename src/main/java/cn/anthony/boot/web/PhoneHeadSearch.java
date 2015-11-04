@@ -14,19 +14,19 @@ public class PhoneHeadSearch extends PageRequest {
     }
 
     public String getProvince() {
-        return province;
+	return province;
     }
 
     public void setProvince(String province) {
-        this.province = province;
+	this.province = province;
     }
 
     public String getCity() {
-        return city;
+	return city;
     }
 
     public void setCity(String city) {
-        this.city = city;
+	this.city = city;
     }
 
 }

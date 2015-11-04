@@ -15,107 +15,109 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "special_phone")
 public class SpecialPhone {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@NotEmpty(message = "类型不能空")
-	@Column(nullable = false, length = 20)
-	private String stype;
-	@Column(nullable = true)
-	private String phone;
-	@Column
-	private String clevel;
-	@Column
-	private String relateId;
-	@Column
-	private String relateObject;
-	@Column
-	private Integer adminId;
-	@Column
-	private Timestamp ctime;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @NotEmpty(message = "类型不能空")
+    @Column(nullable = false, length = 20)
+    private String stype;
+    @Column(nullable = true)
+    private String phone;
+    @Column
+    private String clevel;
+    @Column
+    private String relateId;
+    @Column
+    private String relateObject;
+    @Column
+    private Integer adminId;
+    @Column
+    private Timestamp ctime;
 
-	transient private String stypeDesc;
-	public SpecialPhone() {
-		this.ctime = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	}
-	
-	public SpecialPhone(String stype, String phone) {
-		super();
-		this.stype = stype;
-		this.phone = phone;
-		this.ctime = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	}
-	
-	public String getStypeDesc() {
-		if(stype.equalsIgnoreCase("B"))
-			return "黑名单";
-		else if(stype.equalsIgnoreCase("W"))
-			return "白名单";
-		else
-			return stype;
-	}
-	public Long getId() {
-		return id;
-	}
+    transient private String stypeDesc;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public SpecialPhone() {
+	this.ctime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+    }
 
-	public String getStype() {
-		return stype;
-	}
+    public SpecialPhone(String stype, String phone) {
+	super();
+	this.stype = stype;
+	this.phone = phone;
+	this.ctime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+    }
 
-	public void setStype(String stype) {
-		this.stype = stype;
-	}
+    public String getStypeDesc() {
+	if (stype.equalsIgnoreCase("B"))
+	    return "黑名单";
+	else if (stype.equalsIgnoreCase("W"))
+	    return "白名单";
+	else
+	    return stype;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getClevel() {
-		return clevel;
-	}
+    public String getStype() {
+	return stype;
+    }
 
-	public void setClevel(String clevel) {
-		this.clevel = clevel;
-	}
+    public void setStype(String stype) {
+	this.stype = stype;
+    }
 
-	public String getRelateId() {
-		return relateId;
-	}
+    public String getPhone() {
+	return phone;
+    }
 
-	public void setRelateId(String relateId) {
-		this.relateId = relateId;
-	}
+    public void setPhone(String phone) {
+	this.phone = phone;
+    }
 
-	public String getRelateObject() {
-		return relateObject;
-	}
+    public String getClevel() {
+	return clevel;
+    }
 
-	public void setRelateObject(String relateObject) {
-		this.relateObject = relateObject;
-	}
+    public void setClevel(String clevel) {
+	this.clevel = clevel;
+    }
 
-	public Integer getAdminId() {
-		return adminId;
-	}
+    public String getRelateId() {
+	return relateId;
+    }
 
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
-	}
+    public void setRelateId(String relateId) {
+	this.relateId = relateId;
+    }
 
-	public Timestamp getCtime() {
-		return ctime;
-	}
+    public String getRelateObject() {
+	return relateObject;
+    }
 
-	public void setCtime(Timestamp ctime) {
-		this.ctime = ctime;
-	}
+    public void setRelateObject(String relateObject) {
+	this.relateObject = relateObject;
+    }
+
+    public Integer getAdminId() {
+	return adminId;
+    }
+
+    public void setAdminId(Integer adminId) {
+	this.adminId = adminId;
+    }
+
+    public Timestamp getCtime() {
+	return ctime;
+    }
+
+    public void setCtime(Timestamp ctime) {
+	this.ctime = ctime;
+    }
 
 }

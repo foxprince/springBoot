@@ -9,72 +9,82 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PHONEHEAD")
-//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+// @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class PhoneHead {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(nullable = false, precision = 10)
-	private long id;
-	@Column(nullable = false, length = 6)
-	private String province;
-	@Column(nullable = false, length = 10)
-	private String city;
-	@Column(nullable = false, length = 3)
-	private String postcode;
-	@Column(nullable = false, length = 7)
-	//@Index(name = "phoneHead_idx") //注释是因为hibernate不会去创建索引，需要手动到数据库内创建索引
-	private String head;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, precision = 10)
+    private long id;
+    @Column(nullable = false, length = 6)
+    private String province;
+    @Column(nullable = false, length = 10)
+    private String city;
+    @Column(nullable = false, length = 3)
+    private String postcode;
+    @Column(nullable = false, length = 7)
+    // @Index(name = "phoneHead_idx") //注释是因为hibernate不会去创建索引，需要手动到数据库内创建索引
+    private String head;
+    @Column(nullable = true, length = 4)
+    private String operator;
 
-	public PhoneHead() {
+    public PhoneHead() {
 
-	}
+    }
 
-	public PhoneHead(String province, String city, String postcode, String head) {
-		super();
-		this.province = province;
-		this.city = city;
-		this.postcode = postcode;
-		this.head = head;
-	}
+    public PhoneHead(String province, String city, String postcode, String head) {
+	super();
+	this.province = province;
+	this.city = city;
+	this.postcode = postcode;
+	this.head = head;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+	return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+	this.id = id;
+    }
 
-	public String getProvince() {
-		return province;
-	}
+    public String getProvince() {
+	return province;
+    }
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
+    public void setProvince(String province) {
+	this.province = province;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+	return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+	this.city = city;
+    }
 
-	public String getPostcode() {
-		return postcode;
-	}
+    public String getPostcode() {
+	return postcode;
+    }
 
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
+    public void setPostcode(String postcode) {
+	this.postcode = postcode;
+    }
 
-	public String getHead() {
-		return head;
-	}
+    public String getHead() {
+	return head;
+    }
 
-	public void setHead(String head) {
-		this.head = head;
-	}
+    public String getOperator() {
+	return operator;
+    }
+
+    public void setOperator(String operator) {
+	this.operator = operator;
+    }
+
+    public void setHead(String head) {
+	this.head = head;
+    }
 
 }

@@ -25,55 +25,56 @@ import cn.anthony.boot.util.ControllerUtil;
 import cn.anthony.util.StringTools;
 
 @Controller
-@RequestMapping(value="/dr")
-@SessionAttributes(value="pageRequest")
+@RequestMapping(value = "/dr")
+@SessionAttributes(value = "pageRequest")
 public class DrController {
-	@Autowired
-	DrPushService pushService;
-	@Resource
-	DrService drService;
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
-	protected HttpSession session;
+    @Autowired
+    DrPushService pushService;
+    @Resource
+    DrService drService;
+    protected HttpServletRequest request;
+    protected HttpServletResponse response;
+    protected HttpSession session;
 
-	/**
-	 * 该Controller的所有方法在调用前，先执行此@ModelAttribute方法
-	 */
-	@ModelAttribute
-	public void setReqAndRes(HttpServletRequest request,HttpServletResponse response,Model m) {
-		this.request = request;
-		this.response = response;
-		this.session = request.getSession();
-		this.session.setAttribute("pageRequest",new DrSearch());
-		m.addAttribute("spMap", drService.getSpMap());
-		m.addAttribute("channelMap",drService.getChannelMap());
+    /**
+     * 该Controller的所有方法在调用前，先执行此@ModelAttribute方法
+     */
+    @ModelAttribute
+    public void setReqAndRes(HttpServletRequest request, HttpServletResponse response, Model m) {
+	this.request = request;
+	this.response = response;
+	this.session = request.getSession();
+	this.session.setAttribute("pageRequest", new DrSearch());
+	m.addAttribute("spMap", drService.getSpMap());
+	m.addAttribute("channelMap", drService.getChannelMap());
+    }
+
+    @RequestMapping(value = { "/", "index" })
+    public String initPage(@ModelAttribute("pageRequest") DrSearch pageRequest, BindingResult result, Model m, SessionStatus status) {
+	status.setComplete();
+	return listPage(new DrSearch(), result, m, status);
+    }
+
+    @RequestMapping(value = { "/list" })
+    public String listPage(@ModelAttribute("pageRequest") @Valid DrSearch drSearch, BindingResult result, Model m, SessionStatus status) {
+	validate(drSearch, result);
+	if (result.hasErrors()) {
+	    return "/dr/list";
 	}
-	
-	@RequestMapping(value={"/","index"})
-	public String initPage(@ModelAttribute("pageRequest") DrSearch pageRequest,BindingResult result,Model m,SessionStatus status) {
-		status.setComplete();
-		return listPage(new DrSearch(), result, m, status);
-	}
-	
-	@RequestMapping(value={"/list"})
-	public String listPage(@ModelAttribute("pageRequest") @Valid DrSearch drSearch,BindingResult result,Model m,SessionStatus status) {
-		validate(drSearch,result);
-		if(result.hasErrors()) {
-            return "/dr/list";
-        }
-		Page<DrEntity> drPage = drService.find(drSearch.spId,drSearch.channelId,drSearch.phoneStr,drSearch.beginTime,drSearch.endTime,drSearch.page,drSearch.size);
-		session.setAttribute("pageRequest", drSearch);
-		ControllerUtil.setPageVariables(m, drPage);
-		return "/dr/list";
-	}
-	
-	public void validate(DrSearch request, Errors errors) {
-		if(!StringUtils.isEmpty(request.getPhoneStr()))
-			for(String phone :StringTools.splitString(request.getPhoneStr(), " \n\t,")) 
-				if(!StringTools.isValidPhone(phone)) {
-					errors.rejectValue("phoneStr", "validation.negative", "手机号码非法");
-					return;
-				}
-	}
-	
+	Page<DrEntity> drPage = drService.find(drSearch.spId, drSearch.channelId, drSearch.phoneStr, drSearch.beginTime, drSearch.endTime,
+		drSearch.page, drSearch.size);
+	session.setAttribute("pageRequest", drSearch);
+	ControllerUtil.setPageVariables(m, drPage);
+	return "/dr/list";
+    }
+
+    public void validate(DrSearch request, Errors errors) {
+	if (!StringUtils.isEmpty(request.getPhoneStr()))
+	    for (String phone : StringTools.splitString(request.getPhoneStr(), " \n\t,"))
+		if (!StringTools.isValidPhone(phone)) {
+		    errors.rejectValue("phoneStr", "validation.negative", "手机号码非法");
+		    return;
+		}
+    }
+
 }

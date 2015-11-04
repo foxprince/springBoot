@@ -7,19 +7,19 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 //@Configuration
 //@EnableWebMvc
-public class WebMvcConfig extends WebMvcConfigurerAdapter{
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
+	configurer.enable();
     }
 
     @Bean
     public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/jsp/");
-        resolver.setSuffix(".jsp");
-        return resolver;
+	InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+	resolver.setPrefix("/WEB-INF/jsp/");
+	resolver.setSuffix(".jsp");
+	return resolver;
     }
 
 }

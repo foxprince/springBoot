@@ -1,6 +1,5 @@
 package com.bestv.sdk.utils;
 
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -30,65 +29,64 @@ public final class JsonUtils {
     }
 
     public static Map<String, String> jsonMapString(final String jsonStr) {
-        if (jsonStr == null) {
-            return null;
-        }
-        HashMap<String, String> map = new HashMap<String, String>();
-        JSONTokener jtokener = new JSONTokener(jsonStr);
-        try {
-            org.json.JSONObject json = new org.json.JSONObject(jtokener);
-            Iterator it = json.keys();
-            while (it.hasNext()) {
-                final String key = (String) it.next();
-                map.put(key, String.valueOf(json.get(key)));
-            }
-        } catch (JSONException e) {
-            LOGGER.info("json to map String error!!");
-        }
-        return map;
+	if (jsonStr == null) {
+	    return null;
+	}
+	HashMap<String, String> map = new HashMap<String, String>();
+	JSONTokener jtokener = new JSONTokener(jsonStr);
+	try {
+	    org.json.JSONObject json = new org.json.JSONObject(jtokener);
+	    Iterator it = json.keys();
+	    while (it.hasNext()) {
+		final String key = (String) it.next();
+		map.put(key, String.valueOf(json.get(key)));
+	    }
+	} catch (JSONException e) {
+	    LOGGER.info("json to map String error!!");
+	}
+	return map;
     }
 
     public static <T> T json2Bean(final String jsonStr, Class<T> clazz) {
-        final Gson gson = new Gson();
-        T t = null;
-        try {
-            t = gson.fromJson(jsonStr, clazz);
-        } catch (JsonSyntaxException e) {
-            LOGGER.info("json2Bean error" + e.getMessage());
-        }
-        return t;
+	final Gson gson = new Gson();
+	T t = null;
+	try {
+	    t = gson.fromJson(jsonStr, clazz);
+	} catch (JsonSyntaxException e) {
+	    LOGGER.info("json2Bean error" + e.getMessage());
+	}
+	return t;
     }
 
     public static <T> String bean2Json(final T t) {
-        final Gson gson = new Gson();
-        String jsonStr = null;
-        try {
-            jsonStr = gson.toJson(t);
-        } catch (JsonSyntaxException e) {
-            LOGGER.info("json2Bean error" + e.getMessage());
-        }
-        return jsonStr;
+	final Gson gson = new Gson();
+	String jsonStr = null;
+	try {
+	    jsonStr = gson.toJson(t);
+	} catch (JsonSyntaxException e) {
+	    LOGGER.info("json2Bean error" + e.getMessage());
+	}
+	return jsonStr;
     }
 
     /**
      * 将map结构转为key=value&key=value格式.
      *
-     * @param params map
+     * @param params
+     *            map
      * @return format str
      */
-    public static String map2KVStr(final Map<String, String> params,
-                                   final boolean urlEncode) {
-        final StringBuilder sb = new StringBuilder();
-        final Set<Map.Entry<String, String>> entrySet = params.entrySet();
-        for (Map.Entry<String, String> entry : entrySet) {
-            String value = entry.getValue();
-            if (urlEncode) {
-                value = StringUtils.urlEncodeWithUtf8(value);
-            }
-            sb.append(entry.getKey() + "=" + value)
-                    .append("&");
-        }
-        return sb.substring(0, sb.length() - 1);
+    public static String map2KVStr(final Map<String, String> params, final boolean urlEncode) {
+	final StringBuilder sb = new StringBuilder();
+	final Set<Map.Entry<String, String>> entrySet = params.entrySet();
+	for (Map.Entry<String, String> entry : entrySet) {
+	    String value = entry.getValue();
+	    if (urlEncode) {
+		value = StringUtils.urlEncodeWithUtf8(value);
+	    }
+	    sb.append(entry.getKey() + "=" + value).append("&");
+	}
+	return sb.substring(0, sb.length() - 1);
     }
 
 }

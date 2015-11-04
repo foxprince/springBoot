@@ -6,15 +6,17 @@
 						<li class="nav-header hidden-tablet">快捷通道</li>
 						<li><a class="ajax-link" href="#"><i class="icon-home"></i><span class="hidden-tablet"> 仪表盘</span></a></li>
 						<li><a class="ajax-link" href="/dr/list"><i class="icon-th"></i><span class="hidden-tablet"> 短代日志</span></a></li>
+						<li><a class="ajax-link" href="/busi/"><i class="icon-th"></i><span class="hidden-tablet"> 业务管理</span></a></li>
+						<li><a class="ajax-link" href="/busiCode/"><i class="icon-th"></i><span class="hidden-tablet"> 业务代码管理</span></a></li>
 						<li><a class="ajax-link" href="/code/addCodeConfig"><i class="icon-th"></i><span class="hidden-tablet"> 添加代码</span></a></li>
 						<li><a class="ajax-link" href="/code/list"><i class="icon-th"></i><span class="hidden-tablet"> 代码列表</span></a></li>
 						<li><a class="ajax-link" href="/phone/list"><i class="icon-ban-circle"></i><span class="hidden-tablet"> 黑白名单</span></a></li>
+						<li><a class="ajax-link" href="/phoneHead/list"><i class="icon-ban-circle"></i><span class="hidden-tablet"> 手机号段</span></a></li>
 						<li class="nav-header hidden-tablet">统计报表</li>
 						<li><a class="ajax-link" href="#"><i class="icon-th"></i><span class="hidden-tablet"> 单日统计</span></a></li>
 						<li><a class="ajax-link" href="#"><i class="icon-th"></i><span class="hidden-tablet"> 实时统计</span></a></li>
 						<li><a class="ajax-link" href="#"><i class="icon-th"></i><span class="hidden-tablet"> 综合统计</span></a></li>
 						<li class="nav-header hidden-tablet">系统管理</li>
-						<li><a class="ajax-link" href="#"><i class="icon-ban-circle"></i><span class="hidden-tablet"> 黑名单</span></a></li>
 						<li><a class="ajax-link" href="#"><i class=" icon-remove-sign"></i><span class="hidden-tablet"> 错误代码</span></a></li>
 						<li><a class="ajax-link" href="#"><i class="icon-lock"></i><span class="hidden-tablet"> 关键词</span></a></li>
 						

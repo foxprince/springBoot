@@ -3,7 +3,7 @@ create database ssw default charset utf8 COLLATE utf8_general_ci;
 grant all on ssw.* to 'sswuser'@'localhost' identified by 'pwd4ssw';
 grant all on ssw.* to 'sswuser'@'%' identified by 'pwd4ssw';
 
-
+/*短代状态实体*/
  CREATE TABLE `dr_entity` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `channel_id` varchar(20) DEFAULT NULL,
@@ -37,12 +37,44 @@ CREATE TABLE special_phone (
 CREATE INDEX idx_special_phone ON special_phone(phone);
 
 /*手机号段表*/
+drop table phone_head;
 CREATE TABLE phone_head(
  id  integer(11)   primary key not null AUTO_INCREMENT,
  province VARCHAR(6)   NOT NULL,
  city   VARCHAR(10)   NOT NULL,
  postcode VARCHAR(3)   NOT NULL,
- head   VARCHAR(7) UNIQUE NOT NULL
+ head   VARCHAR(7) UNIQUE NOT NULL,
+ operator VARCHAR(4)    NULL /*CMCC,CUCC,CTC*/
 );
 CREATE INDEX idx_phone_head ON phone_head(head);
 
+/*业务属性*/
+drop table busi;
+create table busi(
+    id  integer(11)   primary key not null AUTO_INCREMENT,
+    name    varchar(30)        not null,
+    description varchar(200)   null,
+    active    tinyint(1)        null,/*1:true,0:false*/
+    ctime timestamp not null
+);
+/*业务代码*/
+drop table busi_code;
+create table busi_code(
+    id  integer(11)   primary key not null AUTO_INCREMENT,
+    busi_id    integer(11) not null,
+    code    varchar(30)        not null,
+    fee        integer(4)    null,
+    active    tinyint(1)        null,/*1:true,0:false*/
+    ctime timestamp not null
+);
+/*渠道*/
+create table channel(
+    id  integer(11)   primary key not null AUTO_INCREMENT,
+    name    varchar(30)        not null,
+    corp    varchar(50)    null,
+    active    tinyint(1)        null,/*1:true,0:false*/
+    linkman varchar(10)    null,
+    phone   varchar(18)    null,
+    ctime timestamp not null
+
+);

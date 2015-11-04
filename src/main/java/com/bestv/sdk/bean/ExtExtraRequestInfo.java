@@ -57,118 +57,108 @@ public class ExtExtraRequestInfo implements Serializable {
 
     private String imei;
 
-
     private long ip;
 
     public String getPlatformName() {
-        return platformName;
+	return platformName;
     }
 
     public void setPlatformName(String platformName) {
-        this.platformName = platformName;
+	this.platformName = platformName;
     }
 
     public String getServiceType() {
-        return serviceType;
+	return serviceType;
     }
 
     public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+	this.serviceType = serviceType;
     }
 
     public String getData() {
-        return data;
+	return data;
     }
 
     public void setData(String data) {
-        this.data = data;
+	this.data = data;
     }
 
     public String getAppid() {
-        return appid;
+	return appid;
     }
 
     public void setAppid(String appid) {
-        this.appid = appid;
+	this.appid = appid;
     }
 
     public int getFactAppid() {
-        return factAppid;
+	return factAppid;
     }
 
     public void setFactAppid(int factAppid) {
-        this.factAppid = factAppid;
+	this.factAppid = factAppid;
     }
 
     public boolean isSignPass() {
-        return signPass;
+	return signPass;
     }
 
     public void setSignPass(boolean signPass) {
-        this.signPass = signPass;
+	this.signPass = signPass;
     }
 
     public long getIp() {
-        return ip;
+	return ip;
     }
 
     public void setIp(long ip) {
-        this.ip = ip;
+	this.ip = ip;
     }
 
     public String getAppkey() {
-        return appkey;
+	return appkey;
     }
 
     public void setAppkey(String appkey) {
-        this.appkey = appkey;
+	this.appkey = appkey;
     }
 
     public String getTid() {
-        return tid;
+	return tid;
     }
 
     public void setTid(String tid) {
-        this.tid = tid;
+	this.tid = tid;
     }
 
     public Map<String, String> getDataParams() {
-        return dataParams;
+	return dataParams;
     }
 
     public void setDataParams(Map<String, String> dataParams) {
-        this.dataParams = dataParams;
+	this.dataParams = dataParams;
     }
 
     public String getImsi() {
-        return imsi;
+	return imsi;
     }
 
     public void setImsi(String imsi) {
-        this.imsi = imsi;
+	this.imsi = imsi;
     }
 
     public String getImei() {
-        return imei;
+	return imei;
     }
 
     public void setImei(String imei) {
-        this.imei = imei;
+	this.imei = imei;
     }
 
     @Override
     public String toString() {
-        return "ExtExtraRequestInfo{" +
-                "platformName='" + platformName + '\'' +
-                ", tid='" + tid + '\'' +
-                ", appid='" + appid + '\'' +
-                ", factAppid=" + factAppid +
-                ", signPass=" + signPass +
-                ", appkey='" + appkey + '\'' +
-                ", serviceType='" + serviceType + '\'' +
-                ", data='" + data + '\'' +
-                ", dataParams=" + dataParams +
-                ", ip=" + ip +
-                '}';
+	return "ExtExtraRequestInfo{" + "platformName='" + platformName + '\'' + ", tid='" + tid + '\'' + ", appid='" + appid + '\'' + ", factAppid="
+		+ factAppid + ", signPass=" + signPass + ", appkey='" + appkey + '\'' + ", serviceType='" + serviceType + '\'' + ", data='" + data
+		+ '\'' + ", dataParams=" + dataParams + ", ip=" + ip + '}';
     }
 }

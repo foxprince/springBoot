@@ -1,6 +1,5 @@
 package com.bestv.sdk.bean;
 
-
 import java.io.Serializable;
 
 /**
@@ -20,37 +19,33 @@ public class ExtResponseInfo implements Serializable {
      */
     private String data;
 
-
     public int getCode() {
-        return code;
+	return code;
     }
 
-
     public void setCode(int code) {
-        this.code = code;
+	this.code = code;
     }
 
     public String getMsg() {
-        return msg;
+	return msg;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+	this.msg = msg;
     }
 
     public String getData() {
-        return data;
+	return data;
     }
 
     public void setData(String data) {
-        this.data = data;
+	this.data = data;
     }
 
+    @Override
+    public String toString() {
+	return "ExtResponseInfo [code=" + code + ", msg=" + msg + ", data=" + data + "]";
+    }
 
-	@Override
-	public String toString() {
-		return "ExtResponseInfo [code=" + code + ", msg=" + msg + ", data="
-				+ data + "]";
-	}
-    
 }

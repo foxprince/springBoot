@@ -14,17 +14,16 @@ import cn.anthony.boot.service.WorldService;
 @Controller
 public class CountryController {
 
-	private WorldService worldService = new MockWorldService();
+    private WorldService worldService = new MockWorldService();
 
-	@RequestMapping("/countryList.html")
-	@ModelAttribute("countries")
-	public Collection<Country> getCountries() {
-		return worldService.getAllCountries();
-	}
+    @RequestMapping("/countryList.html")
+    @ModelAttribute("countries")
+    public Collection<Country> getCountries() {
+	return worldService.getAllCountries();
+    }
 
-	@RequestMapping("/countryDetails.html")
-	public Country getCountry(
-			@RequestParam(value = "id", required = true) int countryId) {
-		return worldService.getCountryById(countryId);
-	}
+    @RequestMapping("/countryDetails.html")
+    public Country getCountry(@RequestParam(value = "id", required = true) int countryId) {
+	return worldService.getCountryById(countryId);
+    }
 }

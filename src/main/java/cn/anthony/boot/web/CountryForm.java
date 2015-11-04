@@ -25,88 +25,77 @@ import cn.anthony.boot.service.WorldService;
 @SessionAttributes("country")
 public class CountryForm {
 
-	private WorldService worldService = new MockWorldService();
+    private WorldService worldService = new MockWorldService();
 
-	private CountryValidator countryValidator = new CountryValidator();
+    private CountryValidator countryValidator = new CountryValidator();
 
-	@InitBinder
-	public void initBinder(WebDataBinder dataBinder) {
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
 
-		dataBinder.setDisallowedFields(new String[] { "id" });
-		dataBinder.setRequiredFields(new String[] { "name", "area",
-				"population", "currency" });
-		dataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(
-				false));
+	dataBinder.setDisallowedFields(new String[] { "id" });
+	dataBinder.setRequiredFields(new String[] { "name", "area", "population", "currency" });
+	dataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		dateFormat.setLenient(false);
-		dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(
-				dateFormat, true));
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	dateFormat.setLenient(false);
+	dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Country setUpForm(@RequestParam(value = "id", required = false) Integer countryId) {
+	if (countryId == null) {
+	    return new Country();
+	} else {
+	    return worldService.getCountryById(countryId);
 	}
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Country setUpForm(
-			@RequestParam(value = "id", required = false) Integer countryId) {
-		if (countryId == null) {
-			return new Country();
-		} else {
-			return worldService.getCountryById(countryId);
-		}
-	}
+    @RequestMapping(params = "create", method = RequestMethod.POST)
+    public String create(Country country, BindingResult result, SessionStatus status) {
+	return update(country, result, status);
+    }
 
-	@RequestMapping(params = "create", method = RequestMethod.POST)
-	public String create(Country country, BindingResult result,
-			SessionStatus status) {
-		return update(country, result, status);
+    @RequestMapping(params = "update", method = RequestMethod.POST)
+    public String update(Country country, BindingResult result, SessionStatus status) {
+	countryValidator.validate(country, result);
+	if (result.hasErrors()) {
+	    return "countryForm";
+	} else {
+	    worldService.saveCountry(country);
+	    status.setComplete();
+	    return "redirect:countryList.html";
 	}
+    }
 
-	@RequestMapping(params = "update", method = RequestMethod.POST)
-	public String update(Country country, BindingResult result,
-			SessionStatus status) {
-		countryValidator.validate(country, result);
-		if (result.hasErrors()) {
-			return "countryForm";
-		} else {
-			worldService.saveCountry(country);
-			status.setComplete();
-			return "redirect:countryList.html";
-		}
-	}
-
-	@RequestMapping(params = "delete", method = RequestMethod.POST)
-	public String delete(Country country, BindingResult result,
-			SessionStatus status) {
-		worldService.deleteCountry(country);
-		status.setComplete();
-		return "redirect:countryList.html";
-	}
+    @RequestMapping(params = "delete", method = RequestMethod.POST)
+    public String delete(Country country, BindingResult result, SessionStatus status) {
+	worldService.deleteCountry(country);
+	status.setComplete();
+	return "redirect:countryList.html";
+    }
 
 }
 
 class CountryValidator {
 
-	private WorldService worldService = new MockWorldService();
+    private WorldService worldService = new MockWorldService();
 
-	public void validate(Country country, Errors errors) {
+    public void validate(Country country, Errors errors) {
 
-		if (country.getArea() != null && country.getArea() <= 0) {
-			errors.rejectValue("area", "validation.negative", "must be > 0");
-		}
-
-		if (country.getPopulation() != null && country.getPopulation() <= 0) {
-			errors.rejectValue("population", "validation.negative",
-					"must be > 0");
-		}
-
-		if (!errors.hasFieldErrors("name")) {
-			Country existingCountry = worldService.getCountryByName(country
-					.getName());
-			if (existingCountry != null
-					&& (country.isNew() || !country.getId().equals(
-							existingCountry.getId()))) {
-				errors.rejectValue("name", "validation.exists", "exists");
-			}
-		}
+	if (country.getArea() != null && country.getArea() <= 0) {
+	    errors.rejectValue("area", "validation.negative", "must be > 0");
 	}
+
+	if (country.getPopulation() != null && country.getPopulation() <= 0) {
+	    errors.rejectValue("population", "validation.negative", "must be > 0");
+	}
+
+	if (!errors.hasFieldErrors("name")) {
+	    Country existingCountry = worldService.getCountryByName(country.getName());
+	    if (existingCountry != null && (country.isNew() || !country.getId().equals(existingCountry.getId()))) {
+		errors.rejectValue("name", "validation.exists", "exists");
+	    }
+	}
+    }
 
 }

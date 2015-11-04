@@ -4,86 +4,86 @@ import java.util.Date;
 
 public class Country {
 
-	private Integer id;
-	private String name;
-	private Integer area;
-	private Long population;
-	private Date populationLastUpdated;
-	private String currency;
-	private Boolean create = false;
-	
-	public boolean isCreate() {
-		if(id==null)
-			create = true;
-		return create;
-	}
+    private Integer id;
+    private String name;
+    private Integer area;
+    private Long population;
+    private Date populationLastUpdated;
+    private String currency;
+    private Boolean create = false;
 
-	public void setCreate(boolean create) {
-		this.create = create;
-	}
-	public Country() {
-	}
+    public boolean isCreate() {
+	if (id == null)
+	    create = true;
+	return create;
+    }
 
-	public Country(Integer id, String name, Integer area, Long population,
-			Date populationLastUpdated, String currency) {
-		setId(id);
-		setName(name);
-		setArea(area);
-		setPopulation(population);
-		setPopulationLastUpdated(populationLastUpdated);
-		setCurrency(currency);
-	}
+    public void setCreate(boolean create) {
+	this.create = create;
+    }
 
-	public boolean isNew() {
-		return id == null;
-	}
+    public Country() {
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Country(Integer id, String name, Integer area, Long population, Date populationLastUpdated, String currency) {
+	setId(id);
+	setName(name);
+	setArea(area);
+	setPopulation(population);
+	setPopulationLastUpdated(populationLastUpdated);
+	setCurrency(currency);
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public boolean isNew() {
+	return id == null;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public void setArea(Integer area) {
-		this.area = area;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public Integer getArea() {
-		return area;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setPopulation(Long population) {
-		this.population = population;
-	}
+    public void setArea(Integer area) {
+	this.area = area;
+    }
 
-	public Long getPopulation() {
-		return population;
-	}
+    public Integer getArea() {
+	return area;
+    }
 
-	public void setPopulationLastUpdated(Date populationLastUpdated) {
-		this.populationLastUpdated = populationLastUpdated;
-	}
+    public void setPopulation(Long population) {
+	this.population = population;
+    }
 
-	public Date getPopulationLastUpdated() {
-		return populationLastUpdated;
-	}
+    public Long getPopulation() {
+	return population;
+    }
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
+    public void setPopulationLastUpdated(Date populationLastUpdated) {
+	this.populationLastUpdated = populationLastUpdated;
+    }
 
-	public String getCurrency() {
-		return currency;
-	}
+    public Date getPopulationLastUpdated() {
+	return populationLastUpdated;
+    }
+
+    public void setCurrency(String currency) {
+	this.currency = currency;
+    }
+
+    public String getCurrency() {
+	return currency;
+    }
 
 }

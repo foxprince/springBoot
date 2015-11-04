@@ -38,18 +38,21 @@ public class PhoneController {
     SpecialPhoneService service;
 
     @RequestMapping(value = { "/addPhone" })
-    public String processUpload(@RequestParam String stype, @RequestParam String phoneStr, @RequestBody MultipartFile file, final RedirectAttributes redirectAttributes,Model model) {
-	String filePath = PHONE_FILE_DIR + file.getOriginalFilename();
-	File dest = new File(filePath);
-	try {
-	    file.transferTo(dest);
-	} catch (IllegalStateException e) {
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
+    public String processUpload(@RequestParam String stype, @RequestParam String phoneStr, @RequestBody MultipartFile file,
+	    final RedirectAttributes redirectAttributes, Model model) {
 	Set<String> phoneSet = PhoneTools.getPhonesFromString(phoneStr);
-	phoneSet.addAll(FileTools.quickReadFile(filePath));
+	if (file != null && !file.isEmpty()) {
+	    String filePath = PHONE_FILE_DIR + file.getOriginalFilename();
+	    File dest = new File(filePath);
+	    try {
+		file.transferTo(dest);
+	    } catch (IllegalStateException e) {
+		e.printStackTrace();
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	    phoneSet.addAll(FileTools.quickReadFile(filePath));
+	}
 	redirectAttributes.addFlashAttribute("message", "成功导入记录数 :" + service.batchAdd(stype, phoneSet));
 	return "redirect:list";
     }

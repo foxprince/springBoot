@@ -15,9 +15,9 @@ public class DataContants {
     public static final String TRADE_CODE = "tradeCode";
 
     public static final String TRANSATION_ID = "transactionId";
-    
+
     public static final String TELEPHONE = "telephone";
-    
+
     public static final String ORDERID = "orderId";
 
 }

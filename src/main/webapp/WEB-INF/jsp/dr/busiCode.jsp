@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <c:import url="../include/head.jsp">
-	<c:param name="pageTitle" value="手机号段"/>
+	<c:param name="pageTitle" value="业务代码管理"/>
 </c:import>	
 <body>
 	<!-- topbar -->
@@ -23,14 +23,22 @@
 						<a href="../">首页</a> <span class="divider">/</span>
 					</li>
 					<li>
-						<a href="./">手机号段</a>
+						<a href="./">业务代码管理</a>
 					</li>
 				</ul>
 			</div>
 			<div class="row-fluid">
 				<div class="box span12">
 					<div class="box-header well" data-original-title>
-						<h2><i class="icon-edit"/></i>添加号段</h2>
+						<h2>
+						<select name="busiId" class="form-control" onchange="window.location.href=(this.options[this.selectedIndex].value)">
+							<option value="#">请选择</option>
+							<c:forEach var="item" items="${busiMap}">
+							<option value="/busiCode/?busiId=${item.key}" ${(not empty busi) && (item.key == busi.id) ? 'selected="selected"' : ''}>${item.value}</option>
+							</c:forEach>
+						</select>
+						
+						<i class="icon-edit"/></i>${busiCode.actionDesc}业务</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
@@ -38,33 +46,28 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<html:form id="phoneHeadForm" modelAttribute="pageRequest" formUrl="/phoneHead/list">
-						  <table class="table table-condensed">
-							<tr bgcolor="#F3F3F3">
-								<td>
-									<label class="control-label" >省份：</label>
-									<form:select path='province' onchange="window.location.href=(this.options[this.selectedIndex].value)" data-rel="chosen" class="input-medium">
-										<option value="/phoneHead/list">--全部--</option>
-										<form:options items="${provinceMap}" />  
-									</form:select>
+						<form:form class="well form-inline" modelAttribute="busiCode" id="busiForm" action="/busiCode/${busiCode.action} ">
+						  <table class="table">
+						  <tr>
+						  <td>业务：<select name="busi.id" class="input-medium">
+							<c:forEach var="item" items="${busiMap}">
+							<option value="${item.key}" ${(not empty busi) && (item.key == busi.id) ? 'selected="selected"' : ''}>${item.value}</option>
+							</c:forEach>
+							</select></td>
+						  <td>
+						  	代码：<form:input  path="code" class="input-medium" />
+									<form:errors path="code" cssclass="error"/>
+						  </td>
+						  <td align="center" >
+									开/关：<form:select path="active" id="selectError" class="input-medium">  
+							            <form:options items="${activeMap}" />  
+							        </form:select>  
 								</td>
-								<td>
-									<label class="control-label" >城市：</label>
-									<form:select path="city" data-rel="chosen" class="input-medium">
-										<option value="">--全部--</option>
-										<form:options items="${cityMap}" />  
-									</form:select>
-								</td>					
-								<td>
-									<html:inputField name="phone" label="手机号码"/>
-								</td>
-								<td align="center" >
-									  <button type="submit" class="btn btn-primary">搜</button>
-									  <input type="hidden" name="action" value="query"/>
-								</td>
-							</tr>
+						  <td>资费：<form:input path="fee" class="input-medium"></form:input></td>
+						  <td><button type="submit" class="btn btn-primary ">${busiCode.actionDesc}</button></td>
+						  </tr>
 						  </table>
-						</html:form>
+						</form:form>
 					</div>
 				</div>
 			</div>
@@ -76,7 +79,7 @@
 					</c:if>
 					<div class="box-header well" >
 						<h2>
-							<i class="icon-list"></i> 手机号段列表
+							<i class="icon-list"></i> <c:if test="${not empty busi}">${busi.name }</c:if> 业务代码列表
 						</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
@@ -87,36 +90,43 @@
 								<thead>
 									<tr>
 										<th>编号</th>
-										<th>省份</th>
-										<th>城市</th>
-										<th>邮编</th>
-										<th>手机号段</th>
+										<th>名称</th>
+										<th>说明</th>
+										<th>开/关</th>
+										<th>时间</th>
+										<th>操作</th>
+										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var="item" items="${itemList}">
 										<tr>
 											<td>${item.id}</td>
-											<td>${item.province}</td>
-											<td>${item.city}</td>
-											<td>${item.postcode}</td>
-											<td>${item.phone}</td>
+											<td>${item.code}</td>
+											<td>${item.fee}</td>
+											<td>${item.ctime}</td>
+											<td>${item.activeDesc}</td>
+											<td><a href="/busiCode/edit?id=${item.id}" class="btn btn-info">修改</a><br />
+											</td>
+											<td><a href="/busiCode/delete?id=${item.id}" class="btn btn-danger" onclick='return confirm("您确认删除吗？");'>删除</a><br />
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-							<html:page url="list?1=1" />
+							
 					</div>
 				</div>
 				<!--/span-->
 			</div>			
 		  </div><!--/#content.span10-->
 		</div><!--/fluid-row-->
+				
 		<hr>
 <!-- footer -->
 		<%@ include file="../include/footer.jspf" %>
+		
 	</div><!--/.fluid-container-->
     <%@ include file="../include/script.jspf" %>
-
 </body>
 </html>

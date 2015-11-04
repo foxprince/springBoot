@@ -61,16 +61,14 @@ public class ExtRequestInfo implements Serializable {
     private int factAppid;
 
     /**
-     *  ?发 ? id.
+     * ?发 ? id.
      */
     private String devId;
-
 
     /**
      * int类型devId.
      */
     private int factDevId;
-
 
     /**
      * 产品id.
@@ -97,7 +95,6 @@ public class ExtRequestInfo implements Serializable {
      */
     private boolean signPass;
 
-
     /**
      * 渠道id
      */
@@ -118,207 +115,188 @@ public class ExtRequestInfo implements Serializable {
     private String passData;
 
     public String getImsi() {
-        return imsi;
+	return imsi;
     }
 
     public void setImsi(String imsi) {
-        this.imsi = imsi;
+	this.imsi = imsi;
     }
 
-
     public String getImei() {
-        return imei;
+	return imei;
     }
 
     public void setImei(String imei) {
-        this.imei = imei;
+	this.imei = imei;
     }
 
     public String getMobile() {
-        return mobile;
+	return mobile;
     }
 
     public void setMobile(String mobile) {
-        this.mobile = mobile;
+	this.mobile = mobile;
     }
 
     public String getCarrierType() {
-        return carrierType;
+	return carrierType;
     }
 
     public void setCarrierType(String carrierType) {
-        this.carrierType = carrierType;
+	this.carrierType = carrierType;
     }
 
     public String getNotifyUrl() {
-        return notifyUrl;
+	return notifyUrl;
     }
 
     public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
+	this.notifyUrl = notifyUrl;
     }
 
     public String getAppid() {
-        return appid;
+	return appid;
     }
 
     public void setAppid(String appid) {
-        this.appid = appid;
+	this.appid = appid;
     }
 
     public String getDevId() {
-        return devId;
+	return devId;
     }
 
     public void setDevId(String devId) {
-        this.devId = devId;
+	this.devId = devId;
     }
 
     public String getProductId() {
-        return productId;
+	return productId;
     }
 
     public void setProductId(String productId) {
-        this.productId = productId;
+	this.productId = productId;
     }
 
     public String getPlatformName() {
-        return platformName;
+	return platformName;
     }
 
     public void setPlatformName(String platformName) {
-        this.platformName = platformName;
+	this.platformName = platformName;
     }
 
     public int getFactAppid() {
-        return factAppid;
+	return factAppid;
     }
 
     public void setFactAppid(int factAppid) {
-        this.factAppid = factAppid;
+	this.factAppid = factAppid;
     }
 
     public int getFactDevId() {
-        return factDevId;
+	return factDevId;
     }
 
     public void setFactDevId(int factDevId) {
-        this.factDevId = factDevId;
+	this.factDevId = factDevId;
     }
 
     public long getIp() {
-        return ip;
+	return ip;
     }
 
     public void setIp(long ip) {
-        this.ip = ip;
+	this.ip = ip;
     }
 
     public String getOrderId() {
-        return orderId;
+	return orderId;
     }
 
     public void setOrderId(String orderId) {
-        this.orderId = orderId;
+	this.orderId = orderId;
     }
 
     public String getChannelId() {
-        return channelId;
+	return channelId;
     }
 
     public void setChannelId(String channelId) {
-        this.channelId = channelId;
+	this.channelId = channelId;
     }
 
     public int getFactChannelId() {
-        return factChannelId;
+	return factChannelId;
     }
 
     public void setFactChannelId(int factChannelId) {
-        this.factChannelId = factChannelId;
+	this.factChannelId = factChannelId;
     }
 
     public String getProductName() {
-        return productName;
+	return productName;
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+	this.productName = productName;
     }
 
     public String getExt() {
-        return ext;
+	return ext;
     }
 
     public void setExt(String ext) {
-        this.ext = ext;
+	this.ext = ext;
     }
 
     public int getFactCarrierType() {
-        return factCarrierType;
+	return factCarrierType;
     }
 
     public void setFactCarrierType(int factCarrierType) {
-        this.factCarrierType = factCarrierType;
+	this.factCarrierType = factCarrierType;
     }
 
     public String getRealMobile() {
-        return realMobile;
+	return realMobile;
     }
 
     public void setRealMobile(String realMobile) {
-        this.realMobile = realMobile;
+	this.realMobile = realMobile;
     }
 
     public String getAppkey() {
-        return appkey;
+	return appkey;
     }
 
     public void setAppkey(String appkey) {
-        this.appkey = appkey;
+	this.appkey = appkey;
     }
 
     public boolean isSignPass() {
-        return signPass;
+	return signPass;
     }
 
     public void setSignPass(boolean signPass) {
-        this.signPass = signPass;
+	this.signPass = signPass;
     }
 
     public String getPassData() {
-        return passData;
+	return passData;
     }
 
     public void setPassData(String passData) {
-        this.passData = passData;
+	this.passData = passData;
     }
 
     @Override
     public String toString() {
-        return "ExtRequestInfo{" +
-                "orderId='" + orderId + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", realMobile='" + realMobile + '\'' +
-                ", imsi='" + imsi + '\'' +
-                ", imei='" + imei + '\'' +
-                ", carrierType='" + carrierType + '\'' +
-                ", factCarrierType=" + factCarrierType +
-                ", notifyUrl='" + notifyUrl + '\'' +
-                ", appid='" + appid + '\'' +
-                ", factAppid=" + factAppid +
-                ", devId='" + devId + '\'' +
-                ", factDevId=" + factDevId +
-                ", productId='" + productId + '\'' +
-                ", platformName='" + platformName + '\'' +
-                ", productName='" + productName + '\'' +
-                ", ip=" + ip +
-                ", signPass=" + signPass +
-                ", channelId='" + channelId + '\'' +
-                ", factChannelId=" + factChannelId +
-                ", appkey='" + appkey + '\'' +
-                ", ext='" + ext + '\'' +
-                ", passData='" + passData + '\'' +
-                '}';
+	return "ExtRequestInfo{" + "orderId='" + orderId + '\'' + ", mobile='" + mobile + '\'' + ", realMobile='" + realMobile + '\'' + ", imsi='"
+		+ imsi + '\'' + ", imei='" + imei + '\'' + ", carrierType='" + carrierType + '\'' + ", factCarrierType=" + factCarrierType
+		+ ", notifyUrl='" + notifyUrl + '\'' + ", appid='" + appid + '\'' + ", factAppid=" + factAppid + ", devId='" + devId + '\''
+		+ ", factDevId=" + factDevId + ", productId='" + productId + '\'' + ", platformName='" + platformName + '\'' + ", productName='"
+		+ productName + '\'' + ", ip=" + ip + ", signPass=" + signPass + ", channelId='" + channelId + '\'' + ", factChannelId="
+		+ factChannelId + ", appkey='" + appkey + '\'' + ", ext='" + ext + '\'' + ", passData='" + passData + '\'' + '}';
     }
 }

@@ -45,12 +45,12 @@
 							<script src="../resources/js/dateControl.js"></script>
 							<tr bgcolor="#F3F3F3">
 								<td>
-									<label class="control-label" >起始日期：</lable>
+									<label class="control-label" >起始日期：</label>
 									<form:input  path="beginTime" class="input-medium form_datetime" />
 									<form:errors path="beginTime" cssclass="error"/>
 								</td>
 								<td>
-									<label class="control-label" >结束日期：</lable>
+									<label class="control-label" >结束日期：</label>
 									<form:input  path="endTime" class="input-medium form_datetime" />
 									<form:errors path="endTime" cssclass="error"/>
 								</td>
@@ -61,7 +61,7 @@
 							        </form:select>  
 								</td>
 								<td>
-									<label class="control-label" >手机号码：</lable><form:textarea class="input-medium" path="phoneStr" placeHolder="多个号码用半角逗号隔开" />
+									<label class="control-label" >手机号码：</label><form:textarea class="input-medium" path="phoneStr" placeHolder="多个号码用半角逗号隔开" />
 									<form:errors path="phoneStr" cssclass="error"/>
 								</td>
 								<td>

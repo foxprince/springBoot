@@ -8,7 +8,6 @@
 <c:import url="../include/head.jsp">
 	<c:param name="pageTitle" value="黑白名单"/>
 </c:import>	
-
 <body>
 	<!-- topbar -->
 	<%@ include file="../include/topbar.jspf" %>
@@ -39,7 +38,7 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<form class="well form-inline" method="post" name="noSelect" action="/phone/addPhone"  enctype="multipart/form-data">
+						<form class="well form" method="post" name="noSelect" action="/phone/addPhone"  enctype="multipart/form-data">
 						  <table class="table">
 						  <tr>
 						  <td>类型：
@@ -58,10 +57,12 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="row-fluid sortable ui-sortable" >
 				<div class="box span12">		
-					<div class="well"><span class="help-inline">${message}</span></div>
+					<c:if test="${not empty message}"> 
+					<div class="center alert alert-info">
+					<button type="button" class="close" data-dismiss="alert">×</button><strong>${message}</strong></div>
+					</c:if>
 					<div class="box-header well" >
 						<h2>
 							<i class="icon-list"></i> 列表
@@ -92,23 +93,17 @@
 											<td>${item.stypeDesc}</td>
 											<td>${item.ctime}</td>
 											<td>
-											<a href="/phone/delete/${item.id}"><button>删除</button></a><br />
+											<a href="/phone/delete/${item.id}" class="btn btn-warning">删除</a><br />
 											</td>
 										</tr>
 									</c:forEach>
-			
 								</tbody>
 							</table>
 							<html:page url="list?1=1" />
-
 					</div>
 				</div>
 				<!--/span-->
 			</div>			
-			
-			
-		
-		
 		  </div><!--/#content.span10-->
 		</div><!--/fluid-row-->
 				
@@ -118,17 +113,5 @@
 		
 	</div><!--/.fluid-container-->
     <%@ include file="../include/script.jspf" %>
-<script type="text/javascript" src="../resources/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
-<script type="text/javascript" src="../resources/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-
-<script type="text/javascript">
-    $(".form_datetime").datetimepicker({
-        autoclose: true,
-        todayBtn: true,
-        minView:2,
-        pickerPosition: "bottom-left"
-    });
-</script>       
-		
 </body>
 </html>

@@ -8,36 +8,36 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import cn.anthony.boot.doman.CodeConfig;
-import cn.anthony.boot.doman.CodeConfigRepository;
 import cn.anthony.boot.exception.EntityNotFound;
+import cn.anthony.boot.repository.CodeConfigRepository;
 
 @Service
 @Transactional
 public class CodeConfigService {
-	@Resource
+    @Resource
     private CodeConfigRepository drRepository;
- 
+
     public CodeConfig create(CodeConfig drEntity) {
-        CodeConfig createdCodeConfig = drEntity;
-        return drRepository.save(createdCodeConfig);
+	CodeConfig createdCodeConfig = drEntity;
+	return drRepository.save(createdCodeConfig);
     }
-     
+
     public CodeConfig findById(long id) {
-        return drRepository.findOne(id);
+	return drRepository.findOne(id);
     }
- 
+
     public List<CodeConfig> findAll() {
-        return drRepository.findAll();
+	return drRepository.findAll();
     }
-    
-    @Transactional(rollbackOn=EntityNotFound.class)
+
+    @Transactional(rollbackOn = EntityNotFound.class)
     public CodeConfig update(CodeConfig item) throws EntityNotFound {
-        CodeConfig updatedCodeConfig = drRepository.findOne(item.getId());
-        if (updatedCodeConfig == null)
-            throw new EntityNotFound(CodeConfig.class.getName());
-        item.setId(updatedCodeConfig.getId());
-        drRepository.delete(updatedCodeConfig);
-        drRepository.saveAndFlush(item);
-        return updatedCodeConfig;
+	CodeConfig updatedCodeConfig = drRepository.findOne(item.getId());
+	if (updatedCodeConfig == null)
+	    throw new EntityNotFound(CodeConfig.class.getName());
+	item.setId(updatedCodeConfig.getId());
+	drRepository.delete(updatedCodeConfig);
+	drRepository.saveAndFlush(item);
+	return updatedCodeConfig;
     }
 }
