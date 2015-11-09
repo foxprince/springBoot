@@ -68,6 +68,7 @@ create table busi_code(
     ctime timestamp not null
 );
 /*渠道*/
+drop table channel;
 create table channel(
     id  integer(11)   primary key not null AUTO_INCREMENT,
     name    varchar(30)        not null,
@@ -75,6 +76,7 @@ create table channel(
     active    tinyint(1)        null,/*1:true,0:false*/
     linkman varchar(10)    null,
     phone   varchar(18)    null,
+    email   varchar(18)    null,
+    qq   varchar(18)    null,
     ctime timestamp not null
-
 );

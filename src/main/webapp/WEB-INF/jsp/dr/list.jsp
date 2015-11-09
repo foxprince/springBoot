@@ -21,7 +21,7 @@
 			<div>
 				<ul class="breadcrumb">
 					<li>
-						<a href="../main/">首页</a> <span class="divider">/</span>
+						<a href="../">首页</a> <span class="divider">/</span>
 					</li>
 					<li>
 						<a href="./">发送日志</a>

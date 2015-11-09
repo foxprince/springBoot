@@ -1,5 +1,8 @@
 package cn.anthony.boot.util;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 
@@ -20,4 +23,12 @@ public class ControllerUtil {
 	mav.addAttribute("hasNext", page.hasNext());
 	mav.addAttribute("isLast", page.isLast());
     }
+
+    public static Map<Boolean, String> getActiveMap() {
+	Map<Boolean, String> m = new LinkedHashMap<Boolean, String>();
+	m.put(Boolean.TRUE, "开");
+	m.put(Boolean.FALSE, "关");
+	return m;
+    }
+
 }

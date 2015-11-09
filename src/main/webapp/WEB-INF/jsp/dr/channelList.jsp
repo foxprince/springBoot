@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <c:import url="../include/head.jsp">
-	<c:param name="pageTitle" value="业务管理"/>
+	<c:param name="pageTitle" value="渠道管理"/>
 </c:import>	
 <body>
 	<!-- topbar -->
@@ -23,51 +23,27 @@
 						<a href="../">首页</a> <span class="divider">/</span>
 					</li>
 					<li>
-						<a href="./">业务管理</a>
+						<a href="./">渠道管理</a>
 					</li>
 				</ul>
 			</div>
 			<div class="row-fluid">
 				<div class="box span12">
 					<div class="box-header well" data-original-title>
-						<h2><i class="icon-edit"/></i>${busi.actionDesc}业务</h2>
-						<div class="box-icon">
-							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
-							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-						</div>
+						<h2><a href="/channel/add" class="btn btn-primary">添加渠道</a></h2>
 					</div>
-					<div class="box-content">
-						<form:form class="well form-inline" modelAttribute="busi" id="busiForm" action="/busi/${busi.action} ">
-						  <table class="table">
-						  <tr>
-						  <td>
-						  名称：<form:input  path="name" class="input-medium" />
-									<form:errors path="name" cssclass="error"/>
-						  </td>
-						  <td align="center" >
-									开/关：<form:select path="active" id="selectError" class="input-medium">  
-							            <form:options items="${activeMap}" />  
-							        </form:select>  
-								</td>
-						  <td>说明：<form:textarea path="description" ></form:textarea></td>
-						  <td><button type="submit" class="btn btn-primary ">${busi.actionDesc}</button></td>
-						  </tr>
-						  </table>
-						  <input type="hidden" name="id" value="${busi.id }"/>
-						</form:form>
-					</div>
+					
 				</div>
 			</div>
 			<div class="row-fluid sortable ui-sortable" >
 				<div class="box span12">		
 					<c:if test="${not empty message}"> 
 					<div class="center alert alert-info">
-					<button type="button" class="close" data-dismiss="alert">×</button><strong>${message}</strong></div>
+					<button type="button" class="close" data-dismiss="alert">×</button><strong>${channel.actionDesc}${message}</strong></div>
 					</c:if>
 					<div class="box-header well" >
 						<h2>
-							<i class="icon-list"></i> 列表
+							<i class="icon-list"></i> 渠道列表
 						</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
@@ -79,8 +55,9 @@
 									<tr>
 										<th>编号</th>
 										<th>名称</th>
-										<th>说明</th>
-										<th>开/关</th>
+										<th>联系人</th>
+										<th>电话</th>
+										<th>QQ</th>
 										<th>时间</th>
 										<th>操作</th>
 										<th>操作</th>
@@ -91,12 +68,14 @@
 										<tr>
 											<td>${item.id}</td>
 											<td>${item.name}</td>
-											<td>${item.description}</td>
+											<td>${item.linkman}</td>
+											<td>${item.phone}</td>
+											<td>${item.qq}</td>
 											<td>${item.ctime}</td>
 											<td>${item.activeDesc}</td>
-											<td><a href="/busi/editInList?id=${item.id}" class="btn btn-info">修改</a><br />
+											<td><a href="/channel/edit?id=${item.id}" class="btn btn-info">修改</a><br />
 											</td>
-											<td><a href="/busi/delete?id=${item.id}" class="btn btn-danger" onclick='return confirm("您确认删除吗？");'>删除</a><br />
+											<td><a href="/channel/delete?id=${item.id}" class="btn btn-danger" onclick='return confirm("您确认删除吗？");'>删除</a><br />
 											</td>
 										</tr>
 									</c:forEach>

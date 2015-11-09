@@ -106,7 +106,7 @@
 											<td>${item.fee}</td>
 											<td>${item.ctime}</td>
 											<td>${item.activeDesc}</td>
-											<td><a href="/busiCode/edit?id=${item.id}" class="btn btn-info">修改</a><br />
+											<td><a href="/busiCode/editInList?id=${item.id}" class="btn btn-info">修改</a><br />
 											</td>
 											<td><a href="/busiCode/delete?id=${item.id}" class="btn btn-danger" onclick='return confirm("您确认删除吗？");'>删除</a><br />
 											</td>

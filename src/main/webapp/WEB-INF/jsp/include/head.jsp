@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <head>
 	<meta charset="utf-8">
-	<title>${param.pageTitle}_短代管理系统</title>
+	<title>${param.pageTitle}_<spring:message code="website.name"/></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
 	<meta name="author" content="Muhammad Usman">

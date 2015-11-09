@@ -9,7 +9,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="../main/"> <img alt="Logo" src="<c:url value="../resources/img/logo.png"/>" /> <span>短代管理系统</span></a>
+				<a class="brand" href="../main/"> <img alt="Logo" src="<c:url value="../resources/img/logo.png"/>" /> <span><spring:message code="website.name"/></span></a>
 				
 				<!-- theme selector starts -->
 				<div class="btn-group pull-right theme-container" >
@@ -34,13 +34,17 @@
 				<!-- user dropdown starts -->
 				<div class="btn-group pull-right" >
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i><span class="hidden-phone"> ${sessionScope.GROUP_TREE_ADMIN.loginName} </span>
+						<i class="icon-user"></i><span class="hidden-phone"> ${currentUser.username } </span>
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="../main/changePass.jsp">修改密码</a></li>
 						<li class="divider"></li>
-						<li><a href="../main/login.jsp?action=quit">退出</a></li>
+						<li>
+						<form class="form-horizontal"action="/logout" method="post">
+			                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			                <button type="submit">Log out</button>
+			            </form> </li>
 					</ul>
 				</div>
 				<!-- user dropdown ends -->

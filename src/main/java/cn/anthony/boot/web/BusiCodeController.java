@@ -17,6 +17,7 @@ import cn.anthony.boot.doman.BusiCode;
 import cn.anthony.boot.exception.EntityNotFound;
 import cn.anthony.boot.service.BusiCodeService;
 import cn.anthony.boot.service.BusiService;
+import cn.anthony.boot.util.ControllerUtil;
 
 @Controller
 @RequestMapping(value = "/busiCode")
@@ -29,7 +30,7 @@ public class BusiCodeController {
 
     @ModelAttribute
     public BusiCode setUpForm(@RequestParam(required = false) Long busiId, @RequestParam(required = false) Long id, Model m) {
-	m.addAttribute("activeMap", busiService.getActiveMap());
+	m.addAttribute("activeMap", ControllerUtil.getActiveMap());
 	m.addAttribute("busiMap", busiService.getBusiMap());
 	if (id == null) {
 	    BusiCode item = new BusiCode();
@@ -56,7 +57,7 @@ public class BusiCodeController {
     public String edit(@RequestParam Long id, Model m) {
 	BusiCode item = service.findById(id);
 	m.addAttribute(item);
-	return list(item.getBusi().getId(), m);
+	return "redirect:list?busiId=" + item.getBusi().getId();
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
@@ -71,11 +72,11 @@ public class BusiCodeController {
     @RequestMapping(value = { "/" })
     public String index(@RequestParam(required = false) Long busiId, Model m, SessionStatus status) {
 	status.setComplete();
-	return list(busiId, m);
+	return list(busiId, m, status);
     }
 
     @RequestMapping(value = { "/index", "/list" })
-    public String list(@RequestParam(required = false) Long busiId, Model m) {
+    public String list(@RequestParam(required = false) Long busiId, Model m, SessionStatus status) {
 	if (busiId != null)
 	    m.addAttribute("itemList", service.findByBusi(busiId));// busiService.findById(busiId).getCodeList());
 	return "/dr/busiCode";

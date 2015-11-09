@@ -13,32 +13,36 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import cn.anthony.boot.exception.EntityNotFound;
 
-public class SuperService<T> {
-    protected JpaRepository<T, Long> repository;
+public abstract class GenericService<T> {
+    public abstract JpaRepository<T, Long> getRepository();
 
     public T create(T item) {
-	return repository.save(item);
+	return getRepository().save(item);
+    }
+
+    public T update(T item) throws EntityNotFound {
+	return getRepository().save(item);
     }
 
     public T findById(long id) {
-	return repository.findOne(id);
+	return getRepository().findOne(id);
     }
 
     @Transactional(rollbackOn = EntityNotFound.class)
     public T delete(long id) throws EntityNotFound {
-	T deletedT = repository.findOne(id);
+	T deletedT = getRepository().findOne(id);
 	if (deletedT == null)
 	    throw new EntityNotFound(getClassName().toString());
-	repository.delete(deletedT);
+	getRepository().delete(deletedT);
 	return deletedT;
     }
 
     public List<T> findAll() {
-	return repository.findAll();
+	return getRepository().findAll();
     }
 
     public Page<T> findAll(int page, int size) {
-	return repository.findAll(new PageRequest(page - 1, size, Sort.Direction.DESC, "id"));
+	return getRepository().findAll(new PageRequest(page - 1, size, Sort.Direction.DESC, "id"));
     }
 
     public Type getClassName() {

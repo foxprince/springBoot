@@ -28,10 +28,6 @@ public class BaseController {
 	return mav;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public void login() {
-    }
-
     @RequestMapping(value = "/simple", produces = "text/plain;charset=UTF-8")
     public @ResponseBody String simple() {
 	return "Hello world!你好世界";
