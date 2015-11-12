@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PHONEHEAD")
+@Table(name = "phone_head")
 // @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class PhoneHead {
     @Id

@@ -36,7 +36,7 @@ public class PhoneHeadController {
 	return "redirect:list";
     }
 
-    @RequestMapping(value = { "/list" })
+    @RequestMapping(value = { "/", "/list" })
     public String listPage(@ModelAttribute("pageRequest") PhoneHeadSearch pageRequest, Model m) {
 	Page<PhoneHead> drPage = service.find(pageRequest.province, pageRequest.city, pageRequest.phone, pageRequest.page, pageRequest.size);
 	ControllerUtil.setPageVariables(m, drPage);

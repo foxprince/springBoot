@@ -46,8 +46,9 @@ public class ChannelController extends GenericController<Channel> {
     }
 
     @ResponseBody
-    @RequestMapping("list.json")
+    @RequestMapping("list2.json")
     public List<Channel> list() {
+	System.out.println("fffff");
 	return getService().findAll();
     }
 }

@@ -42,12 +42,11 @@ CREATE TABLE phone_head(
  id  integer(11)   primary key not null AUTO_INCREMENT,
  province VARCHAR(6)   NOT NULL,
  city   VARCHAR(10)   NOT NULL,
- postcode VARCHAR(3)   NOT NULL,
- head   VARCHAR(7) UNIQUE NOT NULL,
+ postcode VARCHAR(3)    NULL,
+ head   VARCHAR(11) UNIQUE NOT NULL,
  operator VARCHAR(4)    NULL /*CMCC,CUCC,CTC*/
 );
 CREATE INDEX idx_phone_head ON phone_head(head);
-
 /*业务属性*/
 drop table busi;
 create table busi(

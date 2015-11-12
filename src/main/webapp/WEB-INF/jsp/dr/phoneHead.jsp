@@ -30,7 +30,7 @@
 			<div class="row-fluid">
 				<div class="box span12">
 					<div class="box-header well" data-original-title>
-						<h2><i class="icon-edit"/></i>添加号段</h2>
+						<h2><i class="icon-edit"/></i>搜索号段</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
@@ -43,14 +43,14 @@
 							<tr bgcolor="#F3F3F3">
 								<td>
 									<label class="control-label" >省份：</label>
-									<form:select path='province' onchange="window.location.href=(this.options[this.selectedIndex].value)" data-rel="chosen" class="input-medium">
+									<form:select path='province' onchange="window.location.href='/phoneHead/list?province='+(this.options[this.selectedIndex].value)" data-rel="chosen" class="input-medium">
 										<option value="/phoneHead/list">--全部--</option>
 										<form:options items="${provinceMap}" />  
 									</form:select>
 								</td>
 								<td>
 									<label class="control-label" >城市：</label>
-									<form:select path="city" data-rel="chosen" class="input-medium">
+									<form:select path="city" onchange="window.location.href='/phoneHead/list?province=${pageRequest.province}&city='+(this.options[this.selectedIndex].value)" data-rel="chosen" class="input-medium">
 										<option value="">--全部--</option>
 										<form:options items="${cityMap}" />  
 									</form:select>
@@ -100,7 +100,7 @@
 											<td>${item.province}</td>
 											<td>${item.city}</td>
 											<td>${item.postcode}</td>
-											<td>${item.phone}</td>
+											<td>${item.head}</td>
 										</tr>
 									</c:forEach>
 								</tbody>

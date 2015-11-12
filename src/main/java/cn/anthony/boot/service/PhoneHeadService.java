@@ -38,7 +38,7 @@ public class PhoneHeadService {
 
     public Page<PhoneHead> find(String province, String city, String phone, int pageNumber, int pageSize) {
 	Pageable pageable = new PageRequest(pageNumber - 1, pageSize);
-	if (phone != null && phone.length() > 7)
+	if (phone != null && phone.length() >= 7)
 	    return findByHead(phone.substring(0, 7));
 	if (province == null && city == null)
 	    return dao.findAll(pageable);
