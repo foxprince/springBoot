@@ -25,7 +25,7 @@ public class Busi extends GenericEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "busi")
     transient private List<BusiCode> codeList;
     transient private String activeDesc;
-    transient private Map<Long, String> codeMap;
+    transient private Map<Long, String> codeMap = new HashMap<Long, String>();
 
     public String getActiveDesc() {
 	if (active)

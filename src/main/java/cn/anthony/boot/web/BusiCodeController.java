@@ -1,5 +1,7 @@
 package cn.anthony.boot.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import cn.anthony.boot.doman.Busi;
@@ -59,6 +62,12 @@ public class BusiCodeController extends GenericController<BusiCode> {
 	if (busiId != null)
 	    m.addAttribute("itemList", service.findByBusi(busiId));// busiService.findById(busiId).getCodeList());
 	return "/dr/busiCode";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = { "list.json" }, params = { "busiId" })
+    public List<BusiCode> list(Long busiId) {
+	return service.findByBusi(busiId);
     }
 
 }
