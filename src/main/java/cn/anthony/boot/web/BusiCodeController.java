@@ -6,32 +6,41 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.anthony.boot.doman.Busi;
 import cn.anthony.boot.doman.BusiCode;
-import cn.anthony.boot.exception.EntityNotFound;
 import cn.anthony.boot.service.BusiCodeService;
 import cn.anthony.boot.service.BusiService;
-import cn.anthony.boot.util.ControllerUtil;
+import cn.anthony.boot.service.GenericService;
 
 @Controller
 @RequestMapping(value = "/busiCode")
-@SessionAttributes({ "busiCode" })
-public class BusiCodeController {
+public class BusiCodeController extends GenericController<BusiCode> {
     @Resource
     BusiService busiService;
     @Resource
     BusiCodeService service;
 
+    @Override
+    public BusiCode init(Model m) {
+	m.addAttribute("busiMap", busiService.getBusiMap());
+	return new BusiCode();
+    }
+
+    @Override
+    GenericService<BusiCode> getService() {
+	return this.service;
+    }
+
+    @Override
+    protected String getPageView() {
+	return "/dr/busiCode";
+    }
+
     @ModelAttribute
     public BusiCode setUpForm(@RequestParam(required = false) Long busiId, @RequestParam(required = false) Long id, Model m) {
-	m.addAttribute("activeMap", ControllerUtil.getActiveMap());
-	m.addAttribute("busiMap", busiService.getBusiMap());
 	if (id == null) {
 	    BusiCode item = new BusiCode();
 	    if (busiId != null) {
@@ -45,49 +54,11 @@ public class BusiCodeController {
 	}
     }
 
-    @RequestMapping(value = { "/add" })
-    public String adds(BusiCode busiCode, final RedirectAttributes redirectAttributes, Model model, SessionStatus status) {
-	service.create(busiCode);
-	status.setComplete();
-	redirectAttributes.addFlashAttribute("message", "添加成功 :" + busiCode.getCode());
-	return "redirect:list?busiId=" + busiCode.getBusi().getId();
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String edit(@RequestParam Long id, Model m) {
-	BusiCode item = service.findById(id);
-	m.addAttribute(item);
-	return "redirect:list?busiId=" + item.getBusi().getId();
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit(@ModelAttribute BusiCode busiCode, final RedirectAttributes redirectAttributes, SessionStatus status) throws EntityNotFound {
-	String message = "修改成功";
-	service.update(busiCode);
-	status.setComplete();
-	redirectAttributes.addFlashAttribute("message", message);
-	return "redirect:list?busiId=" + busiCode.getBusi().getId();
-    }
-
-    @RequestMapping(value = { "/" })
-    public String index(@RequestParam(required = false) Long busiId, Model m, SessionStatus status) {
-	status.setComplete();
-	return list(busiId, m, status);
-    }
-
-    @RequestMapping(value = { "/index", "/list" })
+    @RequestMapping(value = { "/", "/index", "/list" }, params = { "busiId" })
     public String list(@RequestParam(required = false) Long busiId, Model m, SessionStatus status) {
 	if (busiId != null)
 	    m.addAttribute("itemList", service.findByBusi(busiId));// busiService.findById(busiId).getCodeList());
 	return "/dr/busiCode";
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam Long id, final RedirectAttributes redirectAttributes) throws EntityNotFound {
-	BusiCode item = service.delete(id);
-	String message = "业务代码： " + item.getCode() + " 成功删除";
-	redirectAttributes.addFlashAttribute("message", message);
-	return "redirect:list?busiId=" + item.getBusi().getId();
     }
 
 }

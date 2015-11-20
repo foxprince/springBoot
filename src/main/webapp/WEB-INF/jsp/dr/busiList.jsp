@@ -82,6 +82,7 @@
 										<th>说明</th>
 										<th>开/关</th>
 										<th>时间</th>
+										<th>省份配置</th>
 										<th>操作</th>
 										<th>操作</th>
 									</tr>
@@ -92,8 +93,9 @@
 											<td>${item.id}</td>
 											<td>${item.name}</td>
 											<td>${item.description}</td>
-											<td>${item.ctime}</td>
 											<td>${item.activeDesc}</td>
+											<td>${item.ctime}</td>
+											<td><a href="/busiProvince/?relateId=${item.id}" class="btn btn-success">省份</a></td>
 											<td><a href="/busi/editInList?id=${item.id}" class="btn btn-info">修改</a><br />
 											</td>
 											<td><a href="/busi/delete?id=${item.id}" class="btn btn-danger" onclick='return confirm("您确认删除吗？");'>删除</a><br />

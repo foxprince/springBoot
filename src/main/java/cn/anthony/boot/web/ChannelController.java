@@ -1,13 +1,11 @@
 package cn.anthony.boot.web;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.anthony.boot.doman.Channel;
 import cn.anthony.boot.service.ChannelService;
@@ -21,7 +19,7 @@ public class ChannelController extends GenericController<Channel> {
     ChannelService service;
 
     @Override
-    public Channel init() {
+    public Channel init(Model m) {
 	return new Channel();
     }
 
@@ -43,12 +41,5 @@ public class ChannelController extends GenericController<Channel> {
     @Override
     GenericService<Channel> getService() {
 	return this.service;
-    }
-
-    @ResponseBody
-    @RequestMapping("list2.json")
-    public List<Channel> list() {
-	System.out.println("fffff");
-	return getService().findAll();
     }
 }

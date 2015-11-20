@@ -55,7 +55,7 @@
 							</c:forEach>
 							</select></td>
 						  <td>
-						  	代码：<form:input  path="code" class="input-medium" />
+						  	名称：<form:input  path="code" class="input-medium" />
 									<form:errors path="code" cssclass="error"/>
 						  </td>
 						  <td align="center" >

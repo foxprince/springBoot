@@ -1,6 +1,8 @@
 package cn.anthony.boot.doman;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +25,7 @@ public class Busi extends GenericEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "busi")
     transient private List<BusiCode> codeList;
     transient private String activeDesc;
+    transient private Map<Long, String> codeMap;
 
     public String getActiveDesc() {
 	if (active)
@@ -33,6 +36,13 @@ public class Busi extends GenericEntity {
 
     public List<BusiCode> getCodeList() {
 	return codeList;
+    }
+
+    public Map<Long, String> getCodeMap() {
+	Map<Long, String> m = new HashMap<Long, String>();
+	for (BusiCode bc : getCodeList())
+	    m.put(bc.getId(), bc.getCode());
+	return m;
     }
 
     public void setCodeList(List<BusiCode> codeList) {

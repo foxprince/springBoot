@@ -26,7 +26,7 @@ import cn.anthony.boot.util.ControllerUtil;
 
 @Controller
 public abstract class GenericController<T> {
-    public abstract T init();
+    public abstract T init(Model m);
 
     abstract GenericService<T> getService();
 
@@ -38,7 +38,7 @@ public abstract class GenericController<T> {
     public T setUpForm(@RequestParam(value = "id", required = false) Long id, Model m) {
 	m.addAttribute("activeMap", ControllerUtil.getActiveMap());
 	if (id == null) {
-	    return init();
+	    return init(m);
 	} else {
 	    return getService().findById(id);
 	}
@@ -46,7 +46,7 @@ public abstract class GenericController<T> {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(Model m) {
-	m.addAttribute(init());
+	m.addAttribute(init(m));
 	return getFormView();
     }
 
@@ -102,6 +102,21 @@ public abstract class GenericController<T> {
     public String list(Model m) {
 	m.addAttribute("itemList", getService().findAll());
 	return getPageView();
+    }
+
+    @RequestMapping(value = { "/", "/index", "/list" }, params = { "relateId" })
+    public String list(Model m, @RequestParam(required = false) Long... relateId) {
+	listByRelate(m, relateId);
+	return getPageView();
+    }
+
+    protected void listByRelate(Model m, Long... relateId) {
+    }
+
+    @ResponseBody
+    @RequestMapping("list.json")
+    public List<T> list() {
+	return getService().findAll();
     }
 
     protected abstract String getPageView();

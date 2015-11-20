@@ -79,3 +79,29 @@ create table channel(
     qq   varchar(18)    null,
     ctime timestamp not null
 );
+
+/*渠道-业务代码关联表*/
+drop table channel_code;
+create table channel_code(
+    id  integer(11)   primary key not null AUTO_INCREMENT,
+    channel_id    integer(11) not null,
+    code_id    integer(11) not null,
+    ctime timestamp not null
+);
+
+/*业务-省份关停表*/
+create table busi_province (
+    id  integer(11)   primary key not null AUTO_INCREMENT,
+    busi_id    integer(11) not null,
+    province    varchar(6) not null,
+    ctime timestamp not null
+);
+/*渠道-业务代码-省份*/
+create table channel_code_province (
+    id  integer(11)   primary key not null AUTO_INCREMENT,
+    channel_id    integer(11) not null,
+    code_id    integer(11) not null,
+    province    varchar(6) not null,
+    ctime timestamp not null
+);
+

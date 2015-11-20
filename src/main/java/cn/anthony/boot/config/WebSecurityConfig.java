@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 	http.authorizeRequests()
 		.antMatchers("/", "/resources/**", "/hzpz", "/zxt", "/rmwmo", "/rmwdr", "/rmwivr", "/bestpr", "/fhddo", "/channel/list.json",
-			"/busi/list.json")
+			"/busi/list.json", "/channelCodeProvince/phoneCheck.json")
 		.permitAll().antMatchers("/users/**").hasAuthority("ADMIN").anyRequest().fullyAuthenticated().and().formLogin().loginPage("/login")
 		.failureUrl("/login?error").usernameParameter("email").permitAll().and().logout().logoutUrl("/logout").deleteCookies("remember-me")
 		.logoutSuccessUrl("/").permitAll().and().rememberMe();

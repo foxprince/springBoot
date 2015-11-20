@@ -1,6 +1,7 @@
 package cn.anthony.boot.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,6 +17,8 @@ import cn.anthony.boot.repository.BusiRepository;
 public class BusiService extends GenericService<Busi> {
     @Resource
     protected BusiRepository repository;
+    @Resource
+    BusiCodeService codeService;
 
     public BusiRepository getRepository() {
 	return repository;
@@ -26,6 +29,13 @@ public class BusiService extends GenericService<Busi> {
 	for (Busi item : findAll())
 	    m.put(item.getId(), item.getName());
 	return m;
+    }
+
+    public List<Busi> findAllWithCode() {
+	List<Busi> l = findAll();
+	for (Busi busi : l)
+	    busi.setCodeList(codeService.findByBusi(busi.getId()));
+	return l;
     }
 
 }

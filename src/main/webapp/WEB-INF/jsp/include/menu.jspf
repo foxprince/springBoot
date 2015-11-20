@@ -9,6 +9,9 @@
 						<li><a class="ajax-link" href="/busi/"><i class="icon-th"></i><span class="hidden-tablet"> 业务管理</span></a></li>
 						<li><a class="ajax-link" href="/busiCode/"><i class="icon-th"></i><span class="hidden-tablet"> 业务代码管理</span></a></li>
 						<li><a class="ajax-link" href="/channel/"><i class="icon-th"></i><span class="hidden-tablet"> 渠道管理</span></a></li>
+						<li><a class="ajax-link" href="/channelCode/"><i class="icon-th"></i><span class="hidden-tablet"> 渠道-业务代码配置</span></a></li>
+						<li><a class="ajax-link" href="/busiProvince/"><i class="icon-th"></i><span class="hidden-tablet"> 业务-省份配置</span></a></li>
+						<li><a class="ajax-link" href="/channelCodeProvince/"><i class="icon-th"></i><span class="hidden-tablet"> 渠道-业务代码-省份</span></a></li>
 						<li class="nav-header hidden-tablet">短代支撑</li>
 						<li><a class="ajax-link" href="/dr/list"><i class="icon-th"></i><span class="hidden-tablet"> 短代日志</span></a></li>
 						<li><a class="ajax-link" href="/code/list"><i class="icon-th"></i><span class="hidden-tablet"> 代码列表</span></a></li>

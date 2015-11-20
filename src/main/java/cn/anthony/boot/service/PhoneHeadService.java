@@ -94,4 +94,13 @@ public class PhoneHeadService {
 	    sb.append("\"" + p + "\",");
 	return sb.toString().substring(0, sb.length() - 1);
     }
+
+    public PhoneHead findByPhone(String phone) {
+	if (phone != null && phone.length() >= 7) {
+	    List<PhoneHead> l = findByHead(phone.substring(0, 7)).getContent();
+	    if (l != null && l.size() > 0)
+		return l.get(0);
+	}
+	return null;
+    }
 }

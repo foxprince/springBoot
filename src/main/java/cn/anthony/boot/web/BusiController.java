@@ -1,12 +1,10 @@
 package cn.anthony.boot.web;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.anthony.boot.doman.Busi;
 import cn.anthony.boot.service.BusiService;
@@ -20,7 +18,7 @@ public class BusiController extends GenericController<Busi> {
     BusiService service;
 
     @Override
-    public Busi init() {
+    public Busi init(Model m) {
 	return new Busi();
     }
 
@@ -44,9 +42,4 @@ public class BusiController extends GenericController<Busi> {
 	return "成功删除：" + t.getName();
     }
 
-    @ResponseBody
-    @RequestMapping("list.json")
-    public List<Busi> list() {
-	return getService().findAll();
-    }
 }
