@@ -11,9 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "busi")
 public class Busi extends GenericEntity {
+
+    private static final long serialVersionUID = -9199964027188332358L;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -23,8 +27,11 @@ public class Busi extends GenericEntity {
 
     private boolean active = true;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "busi")
+    @JsonIgnore
     transient private List<BusiCode> codeList;
+    @JsonIgnore
     transient private String activeDesc;
+    @JsonIgnore
     transient private Map<Long, String> codeMap = new HashMap<Long, String>();
 
     public String getActiveDesc() {

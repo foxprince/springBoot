@@ -2,7 +2,6 @@ package cn.anthony.boot.config;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -16,7 +15,7 @@ import com.google.gson.GsonBuilder;
  * 你可以添加自己的WebMvcConfigurerAdapter类型的@Bean（不使用@EnableWebMvc注解）。
  */
 
-@Configuration
+// @Configuration
 // @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
@@ -27,8 +26,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     private GsonHttpMessageConverter createGsonHttpMessageConverter() {
-	Gson gson = new GsonBuilder()
-		// .excludeFieldsWithoutExposeAnnotation()
+	Gson gson = new GsonBuilder()// .excludeFieldsWithoutExposeAnnotation()//
+				     // 不导出实体中没有用@Expose注解的属性
 		.setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 	GsonHttpMessageConverter gsonConverter = new GsonHttpMessageConverter();
 	gsonConverter.setGson(gson);

@@ -1,5 +1,6 @@
 package cn.anthony.boot.doman;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -10,9 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
-public class GenericEntity {
+public class GenericEntity implements Serializable {
+    private static final long serialVersionUID = 4365837246243902781L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
@@ -20,8 +23,11 @@ public class GenericEntity {
     @Column(name = "ctime", nullable = false)
     protected Timestamp ctime;
 
+    @JsonIgnore
     transient protected Boolean create = false;
+    @JsonIgnore
     transient protected String action;
+    @JsonIgnore
     transient protected String actionDesc;
 
     public GenericEntity() {

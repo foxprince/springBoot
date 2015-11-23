@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "busi_province")
 public class BusiProvince extends GenericEntity {
+    private static final long serialVersionUID = -16030512810265385L;
     @NotNull
     private Long busiId;
     @NotNull

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "channel_code")
 public class ChannelCode extends GenericEntity {
+    private static final long serialVersionUID = 3035420689291223055L;
     @NotNull
     private Long channelId;
     @NotNull

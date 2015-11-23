@@ -10,6 +10,8 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User extends GenericEntity {
 
+    private static final long serialVersionUID = -6742282967978471611L;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 

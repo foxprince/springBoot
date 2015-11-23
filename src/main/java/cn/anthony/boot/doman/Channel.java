@@ -8,9 +8,13 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "channel")
 public class Channel extends GenericEntity {
+    private static final long serialVersionUID = 5302438006705951524L;
+
     @NotNull
     @NotEmpty
     @Column(name = "name", nullable = false, length = 100)
@@ -26,6 +30,7 @@ public class Channel extends GenericEntity {
     private String qq;
     @Email
     private String email;
+    @JsonIgnore
     transient private String activeDesc;
 
     public String getActiveDesc() {

@@ -5,19 +5,16 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "special_phone")
-public class SpecialPhone {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class SpecialPhone extends GenericEntity {
+    private static final long serialVersionUID = -8034209740718906977L;
     @NotEmpty(message = "类型不能空")
     @Column(nullable = false, length = 20)
     private String stype;
@@ -31,9 +28,8 @@ public class SpecialPhone {
     private String relateObject;
     @Column
     private Integer adminId;
-    @Column
-    private Timestamp ctime;
 
+    @JsonIgnore
     transient private String stypeDesc;
 
     public SpecialPhone() {
@@ -54,14 +50,6 @@ public class SpecialPhone {
 	    return "白名单";
 	else
 	    return stype;
-    }
-
-    public Long getId() {
-	return id;
-    }
-
-    public void setId(Long id) {
-	this.id = id;
     }
 
     public String getStype() {
@@ -110,14 +98,6 @@ public class SpecialPhone {
 
     public void setAdminId(Integer adminId) {
 	this.adminId = adminId;
-    }
-
-    public Timestamp getCtime() {
-	return ctime;
-    }
-
-    public void setCtime(Timestamp ctime) {
-	this.ctime = ctime;
     }
 
 }
