@@ -23,10 +23,15 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import cn.anthony.util.SSLUtils;
 
 public class HTTPUtil {
     public static void main(String[] args) {
@@ -59,13 +64,19 @@ public class HTTPUtil {
      * @throws IOException
      */
     public static String get(String url, List<NameValuePair> params) throws IOException {
-	CloseableHttpClient httpclient = HttpClients.createDefault();
+	// CloseableHttpClient httpclient = HttpClients.createDefault();//
+	// SSLUtils.createSSLInsecureClient();
+	CloseableHttpClient httpclient = new DefaultHttpClient();
+	SSLUtils.enableSSL(httpclient);
 	String responseBody = null;
 	try {
 	    HttpGet httpget = new HttpGet(url);
 	    // 设置参数
-	    String str = EntityUtils.toString(new UrlEncodedFormEntity(params, "utf-8"));
-	    httpget.setURI(new URI(httpget.getURI().toString() + "?" + str));
+	    String str = "";
+	    if (params != null && params.size() > 0) {
+		EntityUtils.toString(new UrlEncodedFormEntity(params, "utf-8"));
+		httpget.setURI(new URI(httpget.getURI().toString() + "?" + str));
+	    }
 	    // Create a custom response handler
 	    ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 		@Override
@@ -98,7 +109,9 @@ public class HTTPUtil {
      * @throws IOException
      */
     public static String post(String url, List<NameValuePair> params) throws IOException {
-	CloseableHttpClient httpclient = HttpClients.createDefault();
+	// CloseableHttpClient httpclient = HttpClients.createDefault();
+	CloseableHttpClient httpclient = new DefaultHttpClient();
+	SSLUtils.enableSSL(httpclient);
 	String responseBody = null;
 	try {
 	    // Post请求
@@ -108,6 +121,23 @@ public class HTTPUtil {
 	    // 发送请求
 	    HttpResponse httpresponse = httpclient.execute(httppost);
 	    // 获取返回数据
+	    HttpEntity entity = httpresponse.getEntity();
+	    responseBody = EntityUtils.toString(entity);
+	} catch (ParseException | IOException e) {
+	    e.printStackTrace();
+	} finally {
+	    httpclient.close();
+	}
+	return responseBody;
+    }
+
+    public static String postJson(String url, String jsonStr) throws IOException {
+	CloseableHttpClient httpclient = HttpClients.createDefault();
+	String responseBody = null;
+	try {
+	    HttpPost httppost = new HttpPost(url);
+	    httppost.setEntity(new StringEntity(jsonStr, ContentType.APPLICATION_JSON));
+	    HttpResponse httpresponse = httpclient.execute(httppost);
 	    HttpEntity entity = httpresponse.getEntity();
 	    responseBody = EntityUtils.toString(entity);
 	} catch (ParseException | IOException e) {
